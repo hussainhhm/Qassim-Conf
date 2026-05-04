@@ -1,0 +1,16 @@
+{
+  "name": "المؤتمر الدولي لإدارة الأزمات والكوارث",
+  "short_name": "مؤتمر الأزمات",
+  "description": "الخطة العلمية التفاعلية للمؤتمر الدولي لإدارة الأزمات والطوارئ والكوارث",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0A1628",
+  "theme_color": "#0A1628",
+  "orientation": "any",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

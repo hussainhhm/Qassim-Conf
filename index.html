@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>مؤتمر إدارة الأزمات — القصيم 2026</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0A1628;--navy2:#132240;--navy3:#1E3461;
+  --teal:#0D9488;--teal-l:#CCFBF1;--teal-d:#0F766E;
+  --gold:#D97706;--gold-l:#FEF3C7;
+  --coral:#DC4B32;--coral-l:#FEE2D8;
+  --purple:#6D4ACD;--purple-l:#EDE9FE;
+  --green:#16A34A;--green-l:#DCFCE7;
+  --blue:#2563EB;--blue-l:#DBEAFE;
+  --bg:#F0F4F8;--surface:#fff;--surface2:#F8FAFC;
+  --border:#E2E8F0;--border2:#CBD5E1;
+  --text:#0F172A;--text2:#334155;--text3:#64748B;--text4:#94A3B8;
+  --font:'Tajawal',sans-serif;
+  --r:12px;--r-sm:8px;--r-xs:6px;
+  --sh:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+  --sh-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.05);
+  --sh-lg:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);
+  --s-draft:#F59E0B;--s-draft-l:#FFFBEB;
+  --s-review:#3B82F6;--s-review-l:#EFF6FF;
+  --s-approved:#10B981;--s-approved-l:#ECFDF5;
+  --s-revise:#EF4444;--s-revise-l:#FEF2F2;
+  --bnav:62px;--topbar:56px;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}
+
+/* ══ LAYOUT ══ */
+.app{display:flex;min-height:100vh}
+.sidebar{width:252px;background:var(--navy);display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:0;z-index:100;overflow-y:auto}
+.sidebar-header{padding:20px 16px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.logo-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.logo-icon{width:34px;height:34px;background:var(--teal);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-icon svg{width:18px;height:18px}
+.conf-name-ar{font-size:11.5px;font-weight:500;color:#fff;line-height:1.4;cursor:pointer}
+.conf-name-en{font-size:10px;color:rgba(255,255,255,.38);margin-top:1px;cursor:pointer}
+.conf-meta{display:flex;flex-direction:column;gap:3px}
+.meta-row{display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,.48)}
+.meta-row svg{width:11px;height:11px;opacity:.65;flex-shrink:0}
+.sidebar-nav{padding:10px 10px;flex:1}
+.nav-group-label{font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.26);padding:0 8px;margin-bottom:4px;margin-top:14px}
+.nav-btn{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--r-sm);cursor:pointer;font-size:12.5px;color:rgba(255,255,255,.56);transition:all .15s;border:none;background:transparent;width:100%;text-align:right;font-family:var(--font)}
+.nav-btn svg{width:15px;height:15px;flex-shrink:0}
+.nav-btn:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.88)}
+.nav-btn.active{background:rgba(13,148,136,.22);color:#5EEAD4;font-weight:500}
+.nav-cnt{margin-right:auto;background:rgba(255,255,255,.1);color:rgba(255,255,255,.42);font-size:10px;padding:1px 6px;border-radius:10px;min-width:20px;text-align:center}
+.nav-btn.active .nav-cnt{background:rgba(13,148,136,.3);color:#5EEAD4}
+.sidebar-footer{padding:12px 14px;border-top:1px solid rgba(255,255,255,.06);font-size:10px;color:rgba(255,255,255,.18);text-align:center;line-height:1.6}
+
+/* ══ MAIN ══ */
+.main{margin-right:252px;flex:1;min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--sh);height:var(--topbar);flex-shrink:0}
+.topbar-title{font-size:15px;font-weight:700;color:var(--text)}
+.topbar-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.topbar-actions{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.content{padding:22px;flex:1}
+
+/* ══ MOBILE CONF STRIP (hidden on desktop) ══ */
+.mob-strip{display:none;background:var(--navy);color:#fff;padding:10px 14px;align-items:center;gap:10px;cursor:pointer;flex-shrink:0}
+.mob-strip svg{width:15px;height:15px;flex-shrink:0;opacity:.6}
+.mob-strip-name{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mob-strip-meta{font-size:10px;color:rgba(255,255,255,.48)}
+
+/* ══ BOTTOM NAV (mobile only) ══ */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--bnav);background:var(--navy);border-top:1px solid rgba(255,255,255,.08);z-index:100;align-items:stretch;padding-bottom:env(safe-area-inset-bottom)}
+.bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:rgba(255,255,255,.42);font-size:9px;font-weight:500;font-family:var(--font);border:none;background:transparent;padding:4px 2px;transition:color .15s;position:relative}
+.bnav-btn svg{width:20px;height:20px}
+.bnav-btn.active{color:#5EEAD4}
+.bnav-btn.active::after{content:'';position:absolute;top:0;left:25%;right:25%;height:2px;background:#5EEAD4;border-radius:0 0 2px 2px}
+.more-menu{position:fixed;bottom:var(--bnav);left:0;right:0;background:var(--navy2);border-top:1px solid rgba(255,255,255,.1);z-index:99;padding:8px;display:none;flex-wrap:wrap;gap:5px}
+.more-menu.open{display:flex}
+.more-item{flex:1;min-width:calc(50% - 5px);display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--r-sm);cursor:pointer;color:rgba(255,255,255,.68);font-size:12px;font-family:var(--font);border:none;background:rgba(255,255,255,.05)}
+.more-item.active{background:rgba(13,148,136,.2);color:#5EEAD4}
+.more-item svg{width:15px;height:15px;flex-shrink:0}
+
+/* ══ BUTTONS ══ */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--r-sm);font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+.btn svg{width:14px;height:14px;flex-shrink:0}
+.btn-primary{background:var(--teal);color:#fff}.btn-primary:hover{background:var(--teal-d)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}.btn-ghost:hover{background:var(--bg)}
+.btn-sm{padding:5px 10px;font-size:12px}.btn-sm svg{width:13px;height:13px}
+
+/* ══ SECTIONS ══ */
+.section{display:none;animation:fadeIn .18s ease}.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ CARDS ══ */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:14px;box-shadow:var(--sh)}
+.card-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:10px}
+.card-title{font-size:15px;font-weight:700;color:var(--text)}
+.card-sub{font-size:12px;color:var(--text3);margin-top:2px}
+
+/* ══ STATUS ══ */
+.s-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;cursor:pointer;user-select:none}
+.s-draft{background:var(--s-draft-l);color:var(--s-draft)}
+.s-review{background:var(--s-review-l);color:var(--s-review)}
+.s-approved{background:var(--s-approved-l);color:var(--s-approved)}
+.s-revise{background:var(--s-revise-l);color:var(--s-revise)}
+.s-menu{position:fixed;z-index:400;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-sm);box-shadow:var(--sh-lg);padding:4px;min-width:170px;display:none}
+.s-menu-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r-xs);cursor:pointer;font-size:12px;font-weight:500;transition:background .1s}
+.s-menu-item:hover{background:var(--bg)}
+
+/* ══ COMMENTS ══ */
+.cmt-thread{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.cmt-item{display:flex;gap:8px;margin-bottom:8px}
+.cmt-av{width:26px;height:26px;border-radius:50%;background:var(--navy3);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:2px}
+.cmt-bubble{flex:1;min-width:0}
+.cmt-meta{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.cmt-author{font-size:11px;font-weight:600;color:var(--text2)}
+.cmt-date{font-size:10px;color:var(--text4)}
+.cmt-text{font-size:12px;color:var(--text2);line-height:1.5;background:var(--surface2);padding:6px 10px;border-radius:0 var(--r-sm) var(--r-sm) var(--r-sm);border:1px solid var(--border)}
+.cmt-row{display:flex;gap:6px;margin-top:7px;align-items:flex-end}
+.cmt-input{flex:1;padding:6px 10px;border:1px solid var(--border2);border-radius:var(--r-sm);font-family:var(--font);font-size:12px;color:var(--text);resize:none;min-height:32px;max-height:72px;outline:none;transition:border-color .12s;line-height:1.5}
+.cmt-input:focus{border-color:var(--teal)}
+.cmt-send{width:32px;height:32px;border-radius:var(--r-sm);background:var(--teal);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cmt-send:hover{background:var(--teal-d)}
+.cmt-send svg{width:14px;height:14px}
+
+/* ══ ITEM CARDS ══ */
+.item-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;box-shadow:var(--sh)}
+.item-hd{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px}
+.item-body{flex:1;min-width:0}
+.item-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.item-desc{font-size:12px;color:var(--text3);line-height:1.55}
+.track-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+
+/* ══ ICON BUTTON ══ */
+.ib{width:28px;height:28px;border-radius:var(--r-xs);border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text3);transition:all .12s;flex-shrink:0}
+.ib:hover{background:var(--bg);color:var(--text)}
+.ib.del:hover{background:var(--coral-l);color:var(--coral);border-color:var(--coral-l)}
+.ib svg{width:13px;height:13px}
+
+/* ══ BADGES ══ */
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:2px 7px;border-radius:20px}
+.b-teal{background:var(--teal-l);color:var(--teal-d)}.b-gold{background:var(--gold-l);color:var(--gold)}
+.b-coral{background:var(--coral-l);color:var(--coral)}.b-purple{background:var(--purple-l);color:var(--purple)}
+.b-green{background:var(--green-l);color:var(--green)}.b-blue{background:var(--blue-l);color:var(--blue)}
+.b-navy{background:rgba(10,22,40,.07);color:var(--navy2)}
+
+/* ══ THEME BANNER ══ */
+.theme-banner{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);border-radius:var(--r);padding:22px;margin-bottom:14px;position:relative;overflow:hidden}
+.theme-banner::before{content:'';position:absolute;top:-40px;left:-40px;width:170px;height:170px;background:var(--teal);opacity:.06;border-radius:50%}
+.theme-en{font-size:17px;font-weight:700;color:#fff;margin-bottom:5px;line-height:1.4;position:relative}
+.theme-ar{font-size:14px;color:rgba(255,255,255,.66);position:relative;margin-bottom:13px}
+.theme-edit{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);color:rgba(255,255,255,.78);padding:4px 10px;border-radius:var(--r-sm);font-size:11px;font-family:var(--font);cursor:pointer;display:flex;align-items:center;gap:4px}
+.theme-edit:hover{background:rgba(255,255,255,.18)}
+.theme-edit svg{width:11px;height:11px}
+
+/* ══ SPEAKERS GRID ══ */
+.spk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:12px}
+.spk-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:var(--sh);position:relative}
+.spk-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-bottom:10px}
+
+/* ══ TIMELINE ══ */
+.tl-wrap{position:relative;padding-right:22px}
+.tl-wrap::before{content:'';position:absolute;right:4px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.tl-item{display:flex;gap:15px;margin-bottom:20px;align-items:flex-start}
+.tl-dot{width:11px;height:11px;border-radius:50%;margin-top:4px;flex-shrink:0;position:relative;z-index:1;margin-right:-5.5px;border:2px solid var(--surface);box-shadow:0 0 0 2px currentColor}
+.tl-body{flex:1;min-width:0}
+.tl-month{font-size:10.5px;font-weight:700;color:var(--text4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.tl-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.tl-desc{font-size:12px;color:var(--text3);line-height:1.6}
+
+/* ══ AGENDA ══ */
+.ag-row{display:grid;grid-template-columns:78px 1fr;padding:12px 15px;border-bottom:1px solid var(--border);align-items:start}
+.ag-row:last-child{border-bottom:none}
+.ag-row.ag-break{background:var(--surface2)}
+.ag-time{font-size:12px;font-weight:600;color:var(--text2)}
+.ag-end{font-size:10px;color:var(--text4)}
+.ag-body{display:flex;align-items:flex-start;gap:9px}
+.ag-stripe{width:3px;min-height:34px;border-radius:2px;flex-shrink:0;align-self:stretch}
+.ag-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.ag-meta{font-size:11px;color:var(--text3)}
+
+/* ══ DASHBOARD ══ */
+.dash-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center;box-shadow:var(--sh)}
+
+/* ══ CRITERIA BAR ══ */
+.cri-bar-bg{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:3px}
+
+/* ══ FORM ══ */
+.form-group{margin-bottom:13px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:5px}
+.form-input,.form-textarea,.form-select{width:100%;padding:8px 11px;border:1px solid var(--border2);border-radius:var(--r-sm);font-family:var(--font);font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color .12s}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.08)}
+.form-textarea{resize:vertical;min-height:72px;line-height:1.6}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cp-row{display:flex;gap:7px;flex-wrap:wrap}
+.c-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .12s}
+.c-dot.on{border-color:var(--text);transform:scale(1.2)}
+.divider{height:1px;background:var(--border);margin:12px 0}
+
+/* ══ MODAL ══ */
+.mo-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.44);z-index:1000;align-items:center;justify-content:center;padding:14px}
+.mo-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--r);width:100%;max-width:500px;max-height:93vh;overflow-y:auto;box-shadow:var(--sh-lg);animation:moIn .2s ease}
+@keyframes moIn{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mo-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1}
+.mo-title{font-size:15px;font-weight:700;color:var(--text)}
+.mo-close{width:28px;height:28px;border-radius:var(--r-xs);border:none;background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text3)}
+.mo-close svg{width:15px;height:15px}
+.mo-body{padding:16px 18px}
+.mo-footer{display:flex;justify-content:flex-end;gap:7px;padding:12px 18px;border-top:1px solid var(--border)}
+
+/* ══ MISC ══ */
+.add-strip{display:flex;align-items:center;justify-content:center;padding:11px;border:1.5px dashed var(--border2);border-radius:var(--r);cursor:pointer;color:var(--text3);font-size:13px;gap:6px;transition:all .15s;width:100%;background:transparent;font-family:var(--font)}
+.add-strip:hover{border-color:var(--teal);color:var(--teal);background:rgba(13,148,136,.03)}
+.empty{text-align:center;padding:24px;color:var(--text4);font-size:13px}
+.flex-bt{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.flex-w{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:#fff;padding:9px 18px;border-radius:var(--r);font-size:13px;z-index:2000;transition:transform .25s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+#install-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--navy);color:#fff;padding:10px 16px;align-items:center;justify-content:space-between;z-index:200;font-size:13px;gap:8px}
+#install-bar.show{display:flex}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:860px){.sidebar{width:220px}.main{margin-right:220px}}
+@media(max-width:640px){
+  .sidebar{display:none!important}
+  .main{margin-right:0;padding-bottom:var(--bnav)}
+  .mob-strip{display:flex!important}
+  .bottom-nav{display:flex}
+  .content{padding:14px}
+  .form-row{grid-template-columns:1fr}
+  .spk-grid{grid-template-columns:1fr}
+  .topbar{padding:0 12px}
+  .topbar-sub{display:none}
+  .toast{bottom:calc(var(--bnav)+10px)}
+  #install-bar{bottom:var(--bnav)}
+  .topbar .btn span{display:none}
+  #dash-two-col{grid-template-columns:1fr!important}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ══ DESKTOP SIDEBAR ══ -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo-row">
+      <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div>
+        <div class="conf-name-ar" onclick="openConfModal()" id="sb-ar">المؤتمر الدولي لإدارة الأزمات والطوارئ والكوارث</div>
+        <div class="conf-name-en" onclick="openConfModal()" id="sb-en">Crisis & Disaster Management Conference</div>
+      </div>
+    </div>
+    <div class="conf-meta">
+      <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span id="sb-date">سبتمبر 2026</span></div>
+      <div class="meta-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span id="sb-loc">القصيم، المملكة العربية السعودية</span></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group-label">الأقسام العلمية</div>
+    <button class="nav-btn active" onclick="go('theme',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>الثيم العلمي<span class="nav-cnt" id="cnt-sub">-</span></button>
+    <button class="nav-btn" onclick="go('tracks',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>المحاور البحثية<span class="nav-cnt" id="cnt-tr">-</span></button>
+    <button class="nav-btn" onclick="go('speakers',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Keynote Speakers<span class="nav-cnt" id="cnt-sp">-</span></button>
+    <button class="nav-btn" onclick="go('criteria',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>معايير التقييم<span class="nav-cnt" id="cnt-cr">-</span></button>
+    <button class="nav-btn" onclick="go('timeline',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>الجدول الزمني<span class="nav-cnt" id="cnt-tl">-</span></button>
+    <div class="nav-group-label" style="margin-top:16px">التخطيط والإعلان</div>
+    <button class="nav-btn" onclick="go('dashboard',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>لوحة التحكم</button>
+    <button class="nav-btn" onclick="go('agenda',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>جدول الأعمال<span class="nav-cnt" id="cnt-ag">-</span></button>
+    <button class="nav-btn" onclick="go('cfp',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Call for Papers</button>
+  </nav>
+  <div class="sidebar-footer">خارطة الإنماء للاستشارات الهندسية<br>إمارة منطقة القصيم</div>
+</aside>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+  <div class="mob-strip" onclick="openConfModal()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <div style="flex:1;min-width:0"><div class="mob-strip-name" id="mob-name">المؤتمر الدولي لإدارة الأزمات</div><div class="mob-strip-meta" id="mob-meta">سبتمبر 2026 · القصيم</div></div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+  </div>
+
+  <div class="topbar">
+    <div><div class="topbar-title" id="tb-title">الثيم العلمي</div><div class="topbar-sub" id="tb-sub">تعديل الثيم الرئيسي والثيمات الفرعية</div></div>
+    <div class="topbar-actions">
+      <div style="display:flex;align-items:center;gap:4px;padding:3px 10px;border:1px solid var(--border2);border-radius:var(--r-sm);font-size:12px;color:var(--text3)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <select id="user-sel" onchange="setUser(this.value)" style="border:none;outline:none;background:transparent;font-family:var(--font);font-size:12px;color:var(--text2);cursor:pointer;max-width:110px"></select>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="exportData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>تصدير</span></button>
+      <button class="btn btn-ghost btn-sm" onclick="importData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span>استيراد</span></button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- THEME -->
+    <div class="section active" id="sec-theme">
+      <div class="theme-banner">
+        <button class="theme-edit" onclick="openThemeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>تعديل</button>
+        <div class="theme-en" id="theme-en"></div>
+        <div class="theme-ar" id="theme-ar"></div>
+        <div class="flex-w"><span id="status-theme_main" class="s-badge s-draft" onclick="showStatusMenu('theme_main',event)">🟡 مقترح</span><span style="font-size:10px;color:rgba(255,255,255,.36)" id="theme-mod"></span></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div><div class="card-title">المبرر العلمي</div></div><button class="ib" onclick="openThemeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div>
+        <div id="theme-rat" style="font-size:13px;color:var(--text3);line-height:1.7"></div>
+        <div id="cmt-theme_main"></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div><div class="card-title">الثيمات الفرعية</div><div class="card-sub">Sub-themes</div></div><button class="btn btn-primary btn-sm" onclick="openSubModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>إضافة</button></div>
+        <div id="subs-list"></div>
+      </div>
+    </div>
+
+    <!-- TRACKS -->
+    <div class="section" id="sec-tracks">
+      <div class="flex-bt" style="margin-bottom:14px">
+        <div><div style="font-size:16px;font-weight:700">المحاور البحثية</div><div style="font-size:12px;color:var(--text3)">3-5 أوراق بحثية لكل محور</div></div>
+        <button class="btn btn-primary btn-sm" onclick="openTrackModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>إضافة</button>
+      </div>
+      <div id="tracks-list"></div>
+    </div>
+
+    <!-- SPEAKERS -->
+    <div class="section" id="sec-speakers">
+      <div class="flex-bt" style="margin-bottom:14px">
+        <div><div style="font-size:16px;font-weight:700">Keynote Speakers</div><div style="font-size:12px;color:var(--text3)">التغطية الكاملة مشمولة</div></div>
+        <button class="btn btn-primary btn-sm" onclick="openSpkModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>إضافة</button>
+      </div>
+      <div class="spk-grid" id="spk-grid"></div>
+      <div class="card" style="margin-top:14px"><div class="card-title" style="margin-bottom:8px">شروط التغطية الكاملة</div><div style="font-size:13px;color:var(--text3);line-height:1.7" id="coverage-txt"></div><button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="editCoverage()">تعديل</button></div>
+    </div>
+
+    <!-- CRITERIA -->
+    <div class="section" id="sec-criteria">
+      <div class="card">
+        <div class="card-hd"><div><div class="card-title">معايير التقييم</div><div class="card-sub">نظام نقاط تقييم الأبحاث</div></div><button class="btn btn-primary btn-sm" onclick="openCriModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>إضافة</button></div>
+        <div id="cri-list"></div>
+        <div id="cri-total" style="display:flex;justify-content:space-between;align-items:center;padding:10px 13px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);margin-top:12px"></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:10px">حدود القبول</div>
+        <div class="form-row">
+          <div><div style="font-size:12px;color:var(--text3);margin-bottom:3px">الحد الأدنى للقبول</div><div style="font-size:22px;font-weight:800;color:var(--teal)" id="pass-d">65</div><button class="btn btn-ghost btn-sm" style="margin-top:5px" onclick="editPass()">تعديل</button></div>
+          <div><div style="font-size:12px;color:var(--text3);margin-bottom:3px">نقاط Best Paper</div><div style="font-size:22px;font-weight:800;color:var(--gold)" id="best-d">80</div><button class="btn btn-ghost btn-sm" style="margin-top:5px" onclick="editBest()">تعديل</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="section" id="sec-timeline">
+      <div class="card">
+        <div class="card-hd"><div><div class="card-title">الجدول الزمني للجنة العلمية</div><div class="card-sub">مراحل العمل حتى انعقاد المؤتمر</div></div><button class="btn btn-primary btn-sm" onclick="openTlModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>إضافة</button></div>
+        <div class="tl-wrap" id="tl-list"></div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="section" id="sec-dashboard">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:11px;margin-bottom:16px" id="dash-stats"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" id="dash-two-col">
+        <div class="card"><div class="card-title" style="margin-bottom:10px">✅ اكتمال الخطة</div><div id="dash-check"></div></div>
+        <div class="card"><div class="card-title" style="margin-bottom:10px">👥 توزيع المتحدثين</div><div id="dash-spk-chart"></div></div>
+      </div>
+      <div class="card" style="margin-top:14px"><div class="card-title" style="margin-bottom:10px">📊 توزيع نقاط التقييم</div><div id="dash-cri-chart"></div></div>
+      <div class="card" style="margin-top:14px"><div class="card-title" style="margin-bottom:10px">💬 آخر التعليقات</div><div id="dash-cmts"></div></div>
+    </div>
+
+    <!-- AGENDA -->
+    <div class="section" id="sec-agenda">
+      <div class="flex-bt" style="margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div><div style="font-size:16px;font-weight:700">جدول أعمال المؤتمر</div><div style="font-size:12px;color:var(--text3)">يومان — قابل للتعديل الكامل</div></div>
+        <div style="display:flex;gap:6px"><button class="btn btn-ghost btn-sm" onclick="printAgenda()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>طباعة</button><button class="btn btn-primary btn-sm" onclick="openAgModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>إضافة جلسة</button></div>
+      </div>
+      <div style="display:flex;gap:6px;margin-bottom:14px" id="ag-tabs"></div>
+      <div id="ag-content"></div>
+    </div>
+
+    <!-- CFP -->
+    <div class="section" id="sec-cfp">
+      <div class="flex-bt" style="margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div><div style="font-size:16px;font-weight:700">Call for Papers</div><div style="font-size:12px;color:var(--text3)">نموذج جاهز للنشر — ثنائي اللغة</div></div>
+        <div style="display:flex;gap:5px"><button class="btn btn-ghost btn-sm" onclick="copyCFP()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>نسخ</button><button class="btn btn-ghost btn-sm" onclick="printCFP()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>طباعة</button></div>
+      </div>
+      <div style="display:flex;gap:6px;margin-bottom:13px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" id="cfp-ar-btn" onclick="setCFPLang('ar')">عربي</button>
+        <button class="btn btn-ghost btn-sm" id="cfp-en-btn" onclick="setCFPLang('en')">English</button>
+        <button class="btn btn-ghost btn-sm" onclick="regenCFP()" style="margin-right:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.02"/></svg>تحديث من البيانات</button>
+      </div>
+      <div class="card" id="cfp-ar-card"><div style="display:flex;justify-content:flex-end;margin-bottom:9px"><button class="btn btn-ghost btn-sm" onclick="toggleCFPEdit('ar')">تعديل</button></div><div id="cfp-ar-view"></div><textarea id="cfp-ar-edit" class="form-textarea" style="display:none;min-height:440px;font-size:13px;line-height:1.85"></textarea></div>
+      <div class="card" id="cfp-en-card" style="display:none"><div style="display:flex;justify-content:flex-end;margin-bottom:9px"><button class="btn btn-ghost btn-sm" onclick="toggleCFPEdit('en')">Edit</button></div><div id="cfp-en-view" style="direction:ltr;text-align:left"></div><textarea id="cfp-en-edit" class="form-textarea" style="display:none;min-height:440px;font-size:13px;line-height:1.85;direction:ltr;text-align:left"></textarea></div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+</div><!-- /app -->
+
+<!-- ══ MOBILE BOTTOM NAV ══ -->
+<nav class="bottom-nav">
+  <button class="bnav-btn active" id="bn-theme" onclick="mgo('theme','bn-theme')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>الثيم</button>
+  <button class="bnav-btn" id="bn-tracks" onclick="mgo('tracks','bn-tracks')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>المحاور</button>
+  <button class="bnav-btn" id="bn-speakers" onclick="mgo('speakers','bn-speakers')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>متحدثون</button>
+  <button class="bnav-btn" id="bn-agenda" onclick="mgo('agenda','bn-agenda')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>الأجندة</button>
+  <button class="bnav-btn" id="bn-more" onclick="toggleMore()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>المزيد</button>
+</nav>
+<div class="more-menu" id="more-menu">
+  <button class="more-item" id="bm-criteria" onclick="mgo('criteria','bm-criteria');toggleMore()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>معايير التقييم</button>
+  <button class="more-item" id="bm-timeline" onclick="mgo('timeline','bm-timeline');toggleMore()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>الجدول الزمني</button>
+  <button class="more-item" id="bm-dashboard" onclick="mgo('dashboard','bm-dashboard');toggleMore()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>لوحة التحكم</button>
+  <button class="more-item" id="bm-cfp" onclick="mgo('cfp','bm-cfp');toggleMore()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Call for Papers</button>
+</div>
+
+<!-- ══ MODALS ══ -->
+<div class="mo-overlay" id="mo-conf"><div class="modal"><div class="mo-hd"><div class="mo-title">بيانات المؤتمر</div><button class="mo-close" onclick="closeMo('mo-conf')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body"><div class="form-group"><label class="form-label">اسم المؤتمر (عربي)</label><input class="form-input" id="f-c-ar"></div><div class="form-group"><label class="form-label">اسم المؤتمر (إنجليزي)</label><input class="form-input" id="f-c-en"></div><div class="form-row"><div class="form-group"><label class="form-label">التاريخ</label><input class="form-input" id="f-c-dt"></div><div class="form-group"><label class="form-label">الموقع</label><input class="form-input" id="f-c-loc"></div></div><div class="form-group"><label class="form-label">الجهة المنظمة</label><input class="form-input" id="f-c-org"></div><div class="divider"></div><div class="form-group"><label class="form-label">أعضاء الفريق (للتعليقات)</label><div id="team-list" style="margin-bottom:8px"></div><div style="display:flex;gap:6px"><input class="form-input" id="f-new-m" placeholder="اسم العضو" style="flex:1"><button class="btn btn-primary btn-sm" onclick="addMember()">إضافة</button></div></div></div><div class="mo-footer"><button class="btn btn-ghost" onclick="closeMo('mo-conf')">إلغاء</button><button class="btn btn-primary" onclick="saveConf()">حفظ</button></div></div></div>
+<div class="mo-overlay" id="mo-theme"><div class="modal"><div class="mo-hd"><div class="mo-title">تعديل الثيم العلمي</div><button class="mo-close" onclick="closeMo('mo-theme')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body"><div class="form-group"><label class="form-label">الثيم (إنجليزي)</label><input class="form-input" id="f-t-en"></div><div class="form-group"><label class="form-label">الثيم (عربي)</label><input class="form-input" id="f-t-ar"></div><div class="form-group"><label class="form-label">المبرر والتوضيح</label><textarea class="form-textarea" id="f-t-rat"></textarea></div></div><div class="mo-footer"><button class="btn btn-ghost" onclick="closeMo('mo-theme')">إلغاء</button><button class="btn btn-primary" onclick="saveTheme()">حفظ</button></div></div></div>
+<div class="mo-overlay" id="mo-sub"><div class="modal"><div class="mo-hd"><div class="mo-title" id="sub-mo-t">إضافة ثيم فرعي</div><button class="mo-close" onclick="closeMo('mo-sub')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body"><div class="form-group"><label class="form-label">الاسم (إنجليزي)</label><input class="form-input" id="f-s-en"></div><div class="form-group"><label class="form-label">الاسم (عربي)</label><input class="form-input" id="f-s-ar"></div><div class="form-group"><label class="form-label">اللون</label><div class="cp-row" id="sub-cp"></div></div></div><div class="mo-footer"><button class="btn btn-ghost" onclick="closeMo('mo-sub')">إلغاء</button><button class="btn btn-primary" onclick="saveSub()">حفظ</button></div></div></div>
+<div class="mo-overlay" id="mo-track"><div class="modal"><div class="mo-hd"><div class="mo-title" id="tr-mo-t">إضافة محور بحثي</div><button class="mo-close" onclick="closeMo('mo-track')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body"><div class="form-group"><label class="form-label">عنوان المحور</label><input class="form-input" id="f-tr-t"></div><div class="form-group"><label class="form-label">الوصف التفصيلي</label><textarea class="form-textarea" id="f-tr-d"></textarea></div><div class="form-group"><label class="form-label">اللون</label><div class="cp-row" id="tr-cp"></div></div></div><div class="mo-footer"><button class="btn btn-ghost" onclick="closeMo('mo-track')">إلغاء</button><button class="btn btn-primary" onclick="saveTrack()">حفظ</button></div></div></div>
+<div class="mo-overlay" id="mo-spk"><div class="modal"><div class="mo-hd"><div class="mo-title" id="spk-mo-t">إضافة متحدث رئيسي</div><button class="mo-close" onclick="closeMo('mo-spk')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body"><div class="form-row"><div class="form-group"><label class="form-label">الاسم</label><input class="form-input" id="f-sp-n"></div><div class="form-group"><label class="form-label">الأحرف الأولى</label><input class="form-input" id="f-sp-i" maxlength="3"></div></div><div class="form-group"><label class="form-label">الجهة والمنصب</label><input class="form-input" id="f-sp-r"></div><div class="form-group"><label class="form-label">ما سيغطيه</label><textarea class="form-textarea" id="f-sp-d" style="min-height:52px"></textarea></div><div class="form-group"><label class="form-label">النوع</label><select class="form-select" id="f-sp-t"><option value="local">محلي (سعودي)</option><option value="gulf">خليجي / عربي</option><option value="intl">دولي</option><option value="academic">أكاديمي</option><option value="private">قطاع خاص</option><option value="gov">حكومي</option></select></div><div class="form-group"><label class="form-label">اللون</label><div class="cp-row" id="spk-cp"></div></div></div><div class="mo-footer"><button class="btn btn-ghost" onclick="closeMo('mo-spk')">إلغاء</button><button class="btn btn-primary" onclick="saveSpk()">حفظ</button></div></div></div>
+<div class="mo-overlay" id="mo-cri"><div class="modal"><div class="mo-hd"><div class="mo-title" id="cri-mo-t">إضافة معيار تقييم</div><button class="mo-close" onclick="closeMo('mo-cri')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body"><div class="form-group"><label class="form-label">المعيار</label><input class="form-input" id="f-cr-l"></div><div class="form-group"><label class="form-label">النقاط</label><input class="form-input" type="number" id="f-cr-p" min="1" max="100"></div><div class="form-group"><label class="form-label">اللون</label><div class="cp-row" id="cri-cp"></div></div></div><div class="mo-footer"><button class="btn btn-ghost" onclick="closeMo('mo-cri')">إلغاء</button><button class="btn btn-primary" onclick="saveCri()">حفظ</button></div></div></div>
+<div class="mo-overlay" id="mo-tl"><div class="modal"><div class="mo-hd"><div class="mo-title" id="tl-mo-t">إضافة مرحلة</div><button class="mo-close" onclick="closeMo('mo-tl')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body"><div class="form-group"><label class="form-label">الشهر / التاريخ</label><input class="form-input" id="f-tl-m" placeholder="مثال: مايو 2026"></div><div class="form-group"><label class="form-label">عنوان المرحلة</label><input class="form-input" id="f-tl-t"></div><div class="form-group"><label class="form-label">التفاصيل</label><textarea class="form-textarea" id="f-tl-d"></textarea></div><div class="form-group"><label class="form-label">اللون</label><div class="cp-row" id="tl-cp"></div></div></div><div class="mo-footer"><button class="btn btn-ghost" onclick="closeMo('mo-tl')">إلغاء</button><button class="btn btn-primary" onclick="saveTl()">حفظ</button></div></div></div>
+<div class="mo-overlay" id="mo-ag"><div class="modal"><div class="mo-hd"><div class="mo-title" id="ag-mo-t">إضافة جلسة</div><button class="mo-close" onclick="closeMo('mo-ag')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body"><div class="form-group"><label class="form-label">اليوم</label><select class="form-select" id="f-ag-dy"><option value="1">اليوم الأول</option><option value="2">اليوم الثاني</option></select></div><div class="form-row"><div class="form-group"><label class="form-label">البداية</label><input class="form-input" type="time" id="f-ag-s" value="09:00"></div><div class="form-group"><label class="form-label">النهاية</label><input class="form-input" type="time" id="f-ag-e" value="10:00"></div></div><div class="form-group"><label class="form-label">عنوان الجلسة</label><input class="form-input" id="f-ag-t"></div><div class="form-group"><label class="form-label">المتحدث (اختياري)</label><input class="form-input" id="f-ag-sp"></div><div class="form-group"><label class="form-label">القاعة (اختياري)</label><input class="form-input" id="f-ag-r"></div><div class="form-group"><label class="form-label">النوع</label><select class="form-select" id="f-ag-tp"><option value="opening">افتتاح رسمي</option><option value="keynote">Keynote</option><option value="panel">جلسة علمية</option><option value="workshop">ورشة عمل</option><option value="break">استراحة / صلاة</option><option value="lunch">غداء</option><option value="closing">ختام</option><option value="other">أخرى</option></select></div><div class="form-group"><label class="form-label">اللون</label><div class="cp-row" id="ag-cp"></div></div></div><div class="mo-footer"><button class="btn btn-ghost" onclick="closeMo('mo-ag')">إلغاء</button><button class="btn btn-primary" onclick="saveAg()">حفظ</button></div></div></div>
+
+<!-- Status menu -->
+<div id="s-menu" class="s-menu">
+  <div class="s-menu-item s-draft" onclick="applyStatus('draft')"><span style="width:7px;height:7px;border-radius:50%;background:var(--s-draft)"></span>🟡 مقترح</div>
+  <div class="s-menu-item s-review" onclick="applyStatus('review')"><span style="width:7px;height:7px;border-radius:50%;background:var(--s-review)"></span>🔵 قيد المناقشة</div>
+  <div class="s-menu-item s-approved" onclick="applyStatus('approved')"><span style="width:7px;height:7px;border-radius:50%;background:var(--s-approved)"></span>✅ معتمد</div>
+  <div class="s-menu-item s-revise" onclick="applyStatus('revise')"><span style="width:7px;height:7px;border-radius:50%;background:var(--s-revise)"></span>🔴 يحتاج مراجعة</div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="install-bar"><span>📲 ثبّت التطبيق على جهازك</span><div style="display:flex;gap:6px"><button class="btn btn-ghost btn-sm" onclick="document.getElementById('install-bar').classList.remove('show')" style="color:#fff;border-color:rgba(255,255,255,.3)">لاحقاً</button><button class="btn btn-primary btn-sm" id="install-btn">تثبيت</button></div></div>
+<input type="file" id="imp-file" accept=".json" style="display:none" onchange="handleImport(event)">
+
+<script>
+// ═══════════ CONSTANTS ═══════════
+const COLORS=['#0D9488','#6D4ACD','#2563EB','#DC4B32','#D97706','#16A34A','#DB2777','#7C3AED','#0891B2','#65A30D','#9A3412','#1D4ED8'];
+const SL={'draft':'🟡 مقترح','review':'🔵 قيد المناقشة','approved':'✅ معتمد','revise':'🔴 يحتاج مراجعة'};
+const SC={'draft':'s-draft','review':'s-review','approved':'s-approved','revise':'s-revise'};
+const SPL={local:'محلي',gulf:'خليجي',intl:'دولي',academic:'أكاديمي',private:'قطاع خاص',gov:'حكومي'};
+const SPB={local:'b-teal',gulf:'b-purple',intl:'b-blue',academic:'b-coral',private:'b-green',gov:'b-navy'};
+const AGL={opening:'افتتاح',keynote:'Keynote',panel:'جلسة علمية',workshop:'ورشة عمل',break:'استراحة',lunch:'غداء',closing:'ختام',other:'أخرى'};
+const AGC={opening:'#0A1628',keynote:'#0D9488',panel:'#6D4ACD',workshop:'#2563EB',break:'#94A3B8',lunch:'#D97706',closing:'#16A34A',other:'#64748B'};
+const STIT={theme:['الثيم العلمي','الثيم الرئيسي والثيمات الفرعية'],tracks:['المحاور البحثية','إضافة وتعديل المحاور'],speakers:['Keynote Speakers','المتحدثون الرئيسيون المدعوون'],criteria:['معايير التقييم','نظام نقاط تقييم الأبحاث'],timeline:['الجدول الزمني','مراحل العمل للجنة العلمية'],dashboard:['لوحة التحكم','نظرة شاملة على حالة المؤتمر'],agenda:['جدول أعمال المؤتمر','برنامج اليومين كاملاً'],cfp:['Call for Papers','نموذج الدعوة لتقديم الأبحاث']};
+
+// ═══════════ DEFAULT DATA ═══════════
+const DEF={
+  conf:{ar:'المؤتمر الدولي لإدارة الأزمات والطوارئ والكوارث',en:'International Conference on Crisis, Emergency & Disaster Management',date:'سبتمبر 2026',loc:'القصيم، المملكة العربية السعودية',org:'خارطة الإنماء للاستشارات الهندسية - إمارة منطقة القصيم'},
+  theme:{en:'Resilient Communities: Integrated Systems for Crisis, Emergency & Disaster Management',ar:'مجتمعات صامدة: منظومة متكاملة لإدارة الأزمات والطوارئ والكوارث',rat:'يجمع بين مفهوم "الصمود" كهدف استراتيجي، و"المنظومة المتكاملة" كمنهج يعكس التعاون بين القطاعات. مناسب لجمهور متنوع: صانع قرار حكومي، مهندس تقني، وباحث أكاديمي. يتسق مع رؤية 2030 دون أن يكون مقيداً بها.'},
+  subs:[{id:1,en:'Preparedness & Prevention',ar:'الاستعداد والوقاية قبل الكارثة',color:'#0D9488'},{id:2,en:'Emergency Field Response',ar:'الاستجابة الطارئة الميدانية',color:'#6D4ACD'},{id:3,en:'Tech & AI in Crisis Management',ar:'التكنولوجيا والذكاء الاصطناعي في إدارة الأزمات',color:'#2563EB'},{id:4,en:'Critical Infrastructure Protection',ar:'حماية المنشآت الحيوية',color:'#DC4B32'},{id:5,en:'Recovery & Reconstruction',ar:'التعافي وإعادة البناء',color:'#D97706'},{id:6,en:'Institutional & Community Partnership',ar:'الشراكة المجتمعية والمؤسسية',color:'#16A34A'}],
+  tracks:[{id:1,title:'الإطار التشريعي والحوكمة',desc:'السياسات والأنظمة الوطنية، البروتوكولات الدولية (Sendai Framework)، صلاحيات الجهات المعنية',color:'#0D9488'},{id:2,title:'التخطيط والاستعداد المسبق',desc:'خطط الطوارئ المحلية والمناطقية، تدريب الكوادر، تقييم المخاطر وخرائط الهشاشة',color:'#6D4ACD'},{id:3,title:'التكنولوجيا والذكاء الاصطناعي',desc:'أنظمة الإنذار المبكر، Digital Twins للبنية التحتية، الذكاء الاصطناعي في التنبؤ والاستجابة',color:'#2563EB'},{id:4,title:'حماية المنشآت الحيوية',desc:'أنظمة الطاقة والمياه والنقل، التهديدات السيبرانية، السلامة الصناعية في الكوارث',color:'#DC4B32'},{id:5,title:'الكوارث الطبيعية — السياق السعودي',desc:'إدارة السيول في المناطق الجبلية والحضرية، حرائق الغابات، العواصف الرملية',color:'#D97706'},{id:6,title:'التعافي وبناء الصمود',desc:'إعادة الإعمار ما بعد الكارثة، الصحة النفسية للمجتمعات، التمويل والتأمين ضد الكوارث',color:'#16A34A'}],
+  speakers:[{id:1,ini:'DC',name:'ممثل رفيع — الدفاع المدني',role:'الرئاسة العامة للدفاع المدني، المملكة العربية السعودية',desc:'المنظومة الوطنية للاستجابة، الخطط الميدانية للمناطق',type:'local',color:'#0D9488'},{id:2,ini:'NC',name:'ممثل — NCEMA',role:'المركز الوطني لإدارة الأزمات والكوارث، الإمارات',desc:'نموذج الإمارات الرائد في إدارة الأزمات',type:'gulf',color:'#6D4ACD'},{id:3,ini:'UN',name:'خبير — UNDRR',role:'مكتب الأمم المتحدة للحد من مخاطر الكوارث',desc:'إطار Sendai 2015-2030، المعايير الدولية',type:'intl',color:'#2563EB'},{id:4,ini:'JP',name:'خبير ياباني في الكوارث',role:'أكاديمية اليابان لبحوث الكوارث (NIED)',desc:'أنظمة الإنذار المبكر، الهندسة المقاومة للكوارث',type:'intl',color:'#D97706'},{id:5,ini:'AI',name:'متخصص الذكاء الاصطناعي في الطوارئ',role:'KAUST / مركز بحثي سعودي',desc:'تطبيقات AI في التنبؤ، منصات الاستجابة الذكية',type:'academic',color:'#DC4B32'},{id:6,ini:'PR',name:'ممثل القطاع الخاص',role:'أرامكو السعودية',desc:'نماذج الشراكة، حماية المنشآت الصناعية',type:'private',color:'#16A34A'}],
+  criteria:[{id:1,label:'الصلة بمحاور المؤتمر',pts:25,color:'#0D9488'},{id:2,label:'الأصالة والجدة العلمية',pts:20,color:'#6D4ACD'},{id:3,label:'المنهجية البحثية وصحة البيانات',pts:20,color:'#2563EB'},{id:4,label:'القابلية للتطبيق في السياق السعودي',pts:15,color:'#DC4B32'},{id:5,label:'جودة العرض التقديمي والوضوح',pts:10,color:'#D97706'},{id:6,label:'التوصيات والأثر العملي',pts:10,color:'#16A34A'}],
+  timeline:[{id:1,month:'مايو 2026',title:'الإطلاق والتأسيس',desc:'إقرار الثيم والمحاور — تشكيل لجنة التحكيم — إصدار Call for Papers',color:'#0D9488'},{id:2,month:'يونيو 2026',title:'التواصل مع المتحدثين',desc:'إرسال الدعوات الرسمية — بدء استقبال ملخصات الأبحاث',color:'#6D4ACD'},{id:3,month:'يوليو 2026',title:'التقييم والاختيار',desc:'إغلاق استقبال الملخصات (15 يوليو) — تقييم الـ Abstracts — إشعار المقبولين',color:'#2563EB'},{id:4,month:'أغسطس 2026',title:'التحضير النهائي',desc:'استقبال الأوراق كاملة (1-15 أغسطس) — التقييم النهائي — ترتيب جدول الجلسات',color:'#DC4B32'},{id:5,month:'سبتمبر 2026',title:'انعقاد المؤتمر',desc:'اليوم الأول: الافتتاح + Keynotes + جلستان علميتان — اليوم الثاني: جلسات + ورش + Best Papers + التوصيات',color:'#D97706'}],
+  agenda:[{id:1,day:1,s:'08:00',e:'09:00',title:'التسجيل والاستقبال',spk:'',room:'بهو المؤتمر',type:'other',color:'#64748B'},{id:2,day:1,s:'09:00',e:'10:00',title:'حفل الافتتاح الرسمي',spk:'صاحب السمو أمير منطقة القصيم',room:'القاعة الرئيسية',type:'opening',color:'#0A1628'},{id:3,day:1,s:'10:00',e:'11:00',title:'المحاضرة الرئيسية الأولى: المنظومة الوطنية للاستجابة',spk:'ممثل الدفاع المدني',room:'القاعة الرئيسية',type:'keynote',color:'#0D9488'},{id:4,day:1,s:'11:00',e:'11:30',title:'استراحة القهوة',spk:'',room:'',type:'break',color:'#94A3B8'},{id:5,day:1,s:'11:30',e:'13:00',title:'الجلسة العلمية الأولى — الإطار التشريعي والحوكمة',spk:'',room:'القاعة الرئيسية',type:'panel',color:'#6D4ACD'},{id:6,day:1,s:'13:00',e:'14:30',title:'استراحة الغداء والصلاة',spk:'',room:'',type:'lunch',color:'#D97706'},{id:7,day:1,s:'14:30',e:'15:30',title:'المحاضرة الرئيسية الثانية: نموذج الإمارات',spk:'ممثل NCEMA',room:'القاعة الرئيسية',type:'keynote',color:'#0D9488'},{id:8,day:1,s:'15:30',e:'17:00',title:'الجلسة العلمية الثانية — التخطيط والاستعداد',spk:'',room:'القاعة الرئيسية',type:'panel',color:'#6D4ACD'},{id:9,day:2,s:'09:00',e:'10:00',title:'المحاضرة الرئيسية الثالثة: إطار Sendai الدولي',spk:'خبير UNDRR',room:'القاعة الرئيسية',type:'keynote',color:'#0D9488'},{id:10,day:2,s:'10:00',e:'11:30',title:'الجلسة العلمية الثالثة — التكنولوجيا والذكاء الاصطناعي',spk:'',room:'القاعة الرئيسية',type:'panel',color:'#6D4ACD'},{id:11,day:2,s:'11:30',e:'12:00',title:'استراحة القهوة',spk:'',room:'',type:'break',color:'#94A3B8'},{id:12,day:2,s:'12:00',e:'13:00',title:'ورشة العمل — حماية المنشآت الحيوية',spk:'ممثل أرامكو',room:'قاعة أ',type:'workshop',color:'#2563EB'},{id:13,day:2,s:'13:00',e:'14:30',title:'استراحة الغداء والصلاة',spk:'',room:'',type:'lunch',color:'#D97706'},{id:14,day:2,s:'14:30',e:'16:00',title:'الجلسة العلمية الرابعة — التعافي وبناء الصمود',spk:'',room:'القاعة الرئيسية',type:'panel',color:'#6D4ACD'},{id:15,day:2,s:'16:00',e:'16:30',title:'إعلان Best Papers وتكريم الباحثين',spk:'رئيس اللجنة العلمية',room:'القاعة الرئيسية',type:'closing',color:'#16A34A'},{id:16,day:2,s:'16:30',e:'17:30',title:'الجلسة الختامية — التوصيات والبيان الختامي',spk:'',room:'القاعة الرئيسية',type:'closing',color:'#0A1628'}],
+  statuses:{},comments:{},
+  team:['أنا (رئيس اللجنة العلمية)','عضو اللجنة 1','عضو اللجنة 2'],
+  settings:{pass:65,best:80,cov:'تشمل التذاكر الجوية (درجة رجال الأعمال للدوليين)، الإقامة الفندقية طوال فترة المؤتمر، الانتقالات الأرضية، ورسوم رمزية أو هدايا تقديرية.'},
+  cfp_ar:null,cfp_en:null
+};
+
+// ═══════════ STATE ═══════════
+let S=JSON.parse(localStorage.getItem('conf_v4')||'null')||JSON.parse(JSON.stringify(DEF));
+['statuses','comments','team','agenda'].forEach(k=>{if(!S[k])S[k]=JSON.parse(JSON.stringify(DEF[k]||{}))});
+if(!S.settings)S.settings={...DEF.settings};
+
+let CU=S.team[0]||'أنا', EID=null, EC=COLORS[0], ADT=1, CFPL='ar', SMK=null;
+
+function save(){localStorage.setItem('conf_v4',JSON.stringify(S))}
+function uid(){return Date.now()+Math.random()}
+function now(){return new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}
+
+// ═══════════ USER ═══════════
+function buildUserSel(){
+  const s=document.getElementById('user-sel');
+  s.innerHTML=S.team.map(m=>`<option value="${m}"${m===CU?' selected':''}>${m}</option>`).join('');
+}
+function setUser(v){CU=v}
+
+// ═══════════ STATUS ═══════════
+function showStatusMenu(key,e){
+  SMK=key;
+  const menu=document.getElementById('s-menu');
+  const rect=e.target.getBoundingClientRect();
+  menu.style.top=(rect.bottom+window.scrollY+4)+'px';
+  menu.style.right=(window.innerWidth-rect.right)+'px';
+  menu.style.left='auto';
+  menu.style.display='block';
+  setTimeout(()=>document.addEventListener('click',()=>{menu.style.display='none';SMK=null},{once:true}),50);
+  e.stopPropagation();
+}
+function applyStatus(s){
+  if(!SMK)return;
+  S.statuses[SMK]={s,by:CU,at:now()};
+  addCmt(SMK,`غيّر الحالة إلى: ${SL[s]}`,true);
+  save();renderAll();toast('تم تحديث الحالة');
+}
+function getS(k){return(S.statuses[k]||{}).s||'draft'}
+function sBadge(k){
+  const s=getS(k),info=S.statuses[k];
+  const ti=info?`title="بواسطة ${info.by} — ${info.at}"`:'';
+  return `<span class="s-badge ${SC[s]}" id="status-${k}" onclick="showStatusMenu('${k}',event)" ${ti}>${SL[s]}</span>`;
+}
+function updateSBadge(k){const el=document.getElementById('status-'+k);if(el){const s=getS(k);el.className='s-badge '+SC[s];el.textContent=SL[s];}}
+
+// ═══════════ COMMENTS ═══════════
+function addCmt(k,txt,sys=false){
+  if(!txt.trim())return;
+  if(!S.comments[k])S.comments[k]=[];
+  S.comments[k].push({id:uid(),auth:sys?'⚙ النظام':CU,txt:txt.trim(),at:now(),sys});
+  save();
+}
+function cmtHTML(k){
+  const list=S.comments[k]||[];
+  const ini=n=>n.replace('⚙ ','').split(' ').map(w=>w[0]||'').slice(0,2).join('');
+  return `<div class="cmt-thread">
+    ${list.map(c=>`<div class="cmt-item"><div class="cmt-av" style="background:${c.sys?'#475569':'var(--navy3)'}">${ini(c.auth)}</div><div class="cmt-bubble"><div class="cmt-meta"><span class="cmt-author">${c.auth}</span><span class="cmt-date">${c.at}</span></div><div class="cmt-text">${c.txt}</div></div></div>`).join('')}
+    <div class="cmt-row"><textarea class="cmt-input" id="ci-${k}" placeholder="أضف تعليقاً..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitCmt('${k}')}"></textarea><button class="cmt-send" onclick="submitCmt('${k}')"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>
+  </div>`;
+}
+function submitCmt(k){
+  const inp=document.getElementById('ci-'+k);
+  if(!inp||!inp.value.trim())return;
+  addCmt(k,inp.value);inp.value='';
+  const el=document.getElementById('cmt-'+k);
+  if(el)el.innerHTML=cmtHTML(k);
+}
+
+// ═══════════ NAV ═══════════
+function go(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  const[t,sub]=STIT[id]||[id,''];
+  document.getElementById('tb-title').textContent=t;
+  document.getElementById('tb-sub').textContent=sub;
+  if(id==='dashboard')renderDash();
+  if(id==='agenda')renderAgenda();
+  if(id==='cfp')renderCFP();
+}
+function mgo(id,bid){
+  go(id);
+  document.querySelectorAll('.bnav-btn,.more-item').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById(bid);if(el)el.classList.add('active');
+}
+let mOpen=false;
+function toggleMore(){
+  mOpen=!mOpen;
+  document.getElementById('more-menu').classList.toggle('open',mOpen);
+  document.getElementById('bn-more').classList.toggle('active',mOpen);
+  if(mOpen)setTimeout(()=>document.addEventListener('click',()=>{document.getElementById('more-menu').classList.remove('open');document.getElementById('bn-more').classList.remove('active');mOpen=false},{once:true}),50);
+}
+
+// ═══════════ RENDER ALL ═══════════
+function renderAll(){
+  rConf();rTheme();rSubs();rTracks();rSpeakers();rCriteria();rTimeline();rCounts();buildUserSel();
+}
+function rConf(){
+  const c=S.conf;
+  document.getElementById('sb-ar').textContent=c.ar;
+  document.getElementById('sb-en').textContent=c.en;
+  document.getElementById('sb-date').textContent=c.date;
+  document.getElementById('sb-loc').textContent=c.loc;
+  document.getElementById('mob-name').textContent=c.ar;
+  document.getElementById('mob-meta').textContent=c.date+' · '+c.loc.split('،')[0];
+}
+function rTheme(){
+  const t=S.theme;
+  document.getElementById('theme-en').textContent=t.en;
+  document.getElementById('theme-ar').textContent=t.ar;
+  document.getElementById('theme-rat').textContent=t.rat;
+  updateSBadge('theme_main');
+  const info=S.statuses['theme_main'];
+  const mel=document.getElementById('theme-mod');
+  if(mel&&info)mel.textContent='آخر تعديل: '+info.by+' — '+info.at;
+  const cel=document.getElementById('cmt-theme_main');
+  if(cel)cel.innerHTML=cmtHTML('theme_main');
+}
+function rSubs(){
+  const el=document.getElementById('subs-list');
+  if(!S.subs.length){el.innerHTML='<div class="empty">لا توجد ثيمات فرعية</div>';return}
+  el.innerHTML=S.subs.map(s=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r-sm);margin-bottom:7px;background:var(--surface2)"><span style="width:9px;height:9px;border-radius:50%;background:${s.color};flex-shrink:0"></span><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:500">${s.ar}</div><div style="font-size:11px;color:var(--text4)">${s.en}</div></div><div style="display:flex;align-items:center;gap:5px">${sBadge('sub_'+s.id)}<button class="ib" onclick="openSubModal(${s.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib del" onclick="del('subs',${s.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button></div></div>`).join('');
+}
+function rTracks(){
+  const el=document.getElementById('tracks-list');
+  if(!S.tracks.length){el.innerHTML='<div class="empty">لا توجد محاور</div>';return}
+  el.innerHTML=S.tracks.map((t,i)=>`<div class="item-card"><div class="item-hd"><span class="track-num" style="background:${t.color}1a;color:${t.color}">${i+1}</span><div class="item-body"><div class="item-title">${t.title}</div><div class="item-desc">${t.desc}</div></div><div style="display:flex;align-items:flex-start;gap:4px;flex-shrink:0">${sBadge('tr_'+t.id)}<button class="ib" onclick="openTrackModal(${t.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib del" onclick="del('tracks',${t.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button></div></div><div id="cmt-tr_${t.id}">${cmtHTML('tr_'+t.id)}</div></div>`).join('');
+}
+function rSpeakers(){
+  const el=document.getElementById('spk-grid');
+  document.getElementById('coverage-txt').textContent=S.settings.cov;
+  if(!S.speakers.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">لا يوجد متحدثون</div>';return}
+  el.innerHTML=S.speakers.map(s=>`<div class="spk-card"><div style="position:absolute;top:10px;left:10px;display:flex;gap:4px"><button class="ib" onclick="openSpkModal(${s.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib del" onclick="del('speakers',${s.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button></div><div class="spk-av" style="background:${s.color}22;color:${s.color}">${s.ini}</div><div style="font-size:14px;font-weight:600;margin-bottom:2px">${s.name}</div><div style="font-size:12px;color:var(--text3);margin-bottom:7px;line-height:1.4">${s.role}</div><div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px"><span class="badge ${SPB[s.type]||'b-navy'}">${SPL[s.type]||s.type}</span>${sBadge('spk_'+s.id)}</div>${s.desc?`<div style="font-size:11px;color:var(--text4);border-top:1px solid var(--border);padding-top:7px;margin-top:6px;line-height:1.5">${s.desc}</div>`:''}<div id="cmt-spk_${s.id}">${cmtHTML('spk_'+s.id)}</div></div>`).join('');
+}
+function rCriteria(){
+  const tot=S.criteria.reduce((a,c)=>a+c.pts,0);
+  const mx=Math.max(...S.criteria.map(c=>c.pts),1);
+  const el=document.getElementById('cri-list');
+  if(!S.criteria.length){el.innerHTML='<div class="empty">لا توجد معايير</div>';}
+  else el.innerHTML=S.criteria.map(c=>`<div style="display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--border)"><span style="width:9px;height:9px;border-radius:50%;background:${c.color};flex-shrink:0"></span><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:500">${c.label}</div><div class="cri-bar-bg"><div style="height:100%;width:${(c.pts/mx*100).toFixed(0)}%;background:${c.color};border-radius:3px"></div></div></div><div style="text-align:center;min-width:42px"><div style="font-size:14px;font-weight:700;color:var(--text2)">${c.pts}</div><div style="font-size:10px;color:var(--text4)">${tot>0?(c.pts/tot*100).toFixed(0):0}%</div></div><div style="display:flex;gap:4px"><button class="ib" onclick="openCriModal(${c.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib del" onclick="del('criteria',${c.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button></div></div>`).join('');
+  const ok=tot===100;
+  document.getElementById('cri-total').innerHTML=`<span style="font-size:13px;font-weight:600;color:var(--text2)">المجموع</span><span style="font-size:17px;font-weight:800;color:${ok?'var(--teal)':'var(--coral)'}">${tot}/100${ok?' ✓':' ⚠'}</span>`;
+  document.getElementById('pass-d').textContent=S.settings.pass;
+  document.getElementById('best-d').textContent=S.settings.best;
+}
+function rTimeline(){
+  const el=document.getElementById('tl-list');
+  if(!S.timeline.length){el.innerHTML='<div class="empty">لا توجد مراحل</div>';return}
+  el.innerHTML=S.timeline.map(t=>`<div class="tl-item"><div class="tl-dot" style="background:${t.color};color:${t.color}"></div><div class="tl-body"><div class="tl-month">${t.month}</div><div class="tl-title">${t.title}</div><div class="tl-desc">${t.desc}</div><div style="margin-top:6px;display:flex;gap:7px;align-items:center">${sBadge('tl_'+t.id)}</div><div id="cmt-tl_${t.id}">${cmtHTML('tl_'+t.id)}</div></div><div style="display:flex;gap:4px;flex-shrink:0;margin-top:2px"><button class="ib" onclick="openTlModal(${t.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib del" onclick="del('timeline',${t.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button></div></div>`).join('');
+}
+function rCounts(){
+  document.getElementById('cnt-sub').textContent=S.subs.length;
+  document.getElementById('cnt-tr').textContent=S.tracks.length;
+  document.getElementById('cnt-sp').textContent=S.speakers.length;
+  document.getElementById('cnt-cr').textContent=S.criteria.length;
+  document.getElementById('cnt-tl').textContent=S.timeline.length;
+  document.getElementById('cnt-ag').textContent=(S.agenda||[]).length;
+}
+
+// ═══════════ DASHBOARD ═══════════
+function renderDash(){
+  const tot=S.criteria.reduce((a,c)=>a+c.pts,0);
+  const stats=[
+    {i:'🎯',v:S.subs.length,l:'ثيم فرعي',c:'#0D9488'},
+    {i:'📋',v:S.tracks.length,l:'محور بحثي',c:'#6D4ACD'},
+    {i:'🎤',v:S.speakers.length,l:'Keynote',c:'#2563EB'},
+    {i:'⚖️',v:S.criteria.length,l:'معيار تقييم',c:tot===100?'#16A34A':'#DC4B32',sub:tot===100?'✓ 100/100':'⚠ '+tot+'/100'},
+    {i:'📅',v:S.timeline.length,l:'مرحلة زمنية',c:'#D97706'},
+    {i:'🗓',v:(S.agenda||[]).length,l:'جلسة أجندة',c:'#0891B2'}
+  ];
+  document.getElementById('dash-stats').innerHTML=stats.map(s=>`<div class="dash-stat" style="border-top:3px solid ${s.c}"><div style="font-size:20px;margin-bottom:3px">${s.i}</div><div style="font-size:26px;font-weight:800;color:${s.c};line-height:1">${s.v}</div><div style="font-size:11px;color:var(--text3);margin-top:3px">${s.l}</div>${s.sub?`<div style="font-size:10px;margin-top:3px;color:${tot===100?'#16A34A':'#DC4B32'}">${s.sub}</div>`:''}</div>`).join('');
+  const checks=[
+    {l:'الثيم محدد',d:!!(S.theme.en&&S.theme.ar)},
+    {l:'ثيمات فرعية مضافة',d:S.subs.length>0},
+    {l:'محاور بحثية (3+)',d:S.tracks.length>=3},
+    {l:'Keynote Speakers',d:S.speakers.length>0},
+    {l:'معايير التقييم = 100',d:tot===100},
+    {l:'الجدول الزمني (4+)',d:S.timeline.length>=4},
+    {l:'جدول الأعمال مبني',d:(S.agenda||[]).length>=4},
+    {l:'Call for Papers جاهز',d:!!(S.cfp_ar||S.cfp_en)}
+  ];
+  const done=checks.filter(c=>c.d).length,pct=Math.round(done/checks.length*100);
+  document.getElementById('dash-check').innerHTML=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${pct===100?'#16A34A':'#0D9488'};border-radius:4px;transition:width .5s"></div></div><span style="font-size:13px;font-weight:700;color:${pct===100?'#16A34A':'var(--text2)'}">${pct}%</span></div>${checks.map(c=>`<div style="display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span>${c.d?'✅':'⬜'}</span><span style="color:${c.d?'var(--text2)':'var(--text4)'}">${c.l}</span></div>`).join('')}`;
+  const spT={};S.speakers.forEach(s=>{spT[s.type]=(spT[s.type]||0)+1});
+  const spC={local:'#0D9488',gulf:'#6D4ACD',intl:'#2563EB',academic:'#DC4B32',private:'#16A34A',gov:'#D97706'};
+  document.getElementById('dash-spk-chart').innerHTML=Object.keys(spT).length?Object.entries(spT).map(([t,n])=>`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)"><div style="width:8px;height:8px;border-radius:50%;background:${spC[t]||'#999'};flex-shrink:0"></div><div style="flex:1;font-size:12px;color:var(--text2)">${SPL[t]||t}</div><div style="font-size:13px;font-weight:600">${n}</div><div style="width:48px;height:4px;background:var(--border);border-radius:2px;overflow:hidden"><div style="height:100%;width:${n/S.speakers.length*100}%;background:${spC[t]||'#999'}"></div></div></div>`).join(''):'<div style="font-size:12px;color:var(--text4);padding:8px 0">لا يوجد متحدثون</div>';
+  document.getElementById('dash-cri-chart').innerHTML=S.criteria.map(c=>`<div style="display:flex;align-items:center;gap:9px;margin-bottom:6px"><div style="width:100px;font-size:11px;color:var(--text3);text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.label}</div><div style="flex:1;height:15px;background:var(--border);border-radius:3px;overflow:hidden"><div style="height:100%;width:${c.pts}%;background:${c.color};border-radius:3px;display:flex;align-items:center;justify-content:flex-end;padding-left:3px"><span style="font-size:9px;color:#fff;font-weight:700">${c.pts}</span></div></div></div>`).join('');
+  const allC=[];Object.entries(S.comments||{}).forEach(([k,arr])=>arr.forEach(c=>{if(!c.sys)allC.push({...c,k})}));
+  allC.sort((a,b)=>b.id-a.id);
+  document.getElementById('dash-cmts').innerHTML=allC.slice(0,5).length?allC.slice(0,5).map(c=>`<div style="padding:7px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="font-weight:600;color:var(--text2)">${c.auth}</span><span style="color:var(--text4);margin:0 4px">${c.at}</span><div style="color:var(--text3);margin-top:2px">${c.txt}</div></div>`).join(''):'<div style="font-size:12px;color:var(--text4);padding:8px 0">لا توجد تعليقات بعد</div>';
+}
+
+// ═══════════ AGENDA ═══════════
+function renderAgenda(){
+  const days=[...new Set((S.agenda||[]).map(s=>s.day))].sort();
+  const all=days.length?days:[1,2];
+  document.getElementById('ag-tabs').innerHTML=all.map(d=>`<button onclick="setDay(${d})" style="padding:6px 17px;border-radius:20px;border:1.5px solid ${ADT===d?'var(--teal)':'var(--border2)'};background:${ADT===d?'var(--teal)':'transparent'};color:${ADT===d?'#fff':'var(--text2)'};font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s">اليوم ${d===1?'الأول':d===2?'الثاني':d}</button>`).join('');
+  rAgDay();rCounts();
+}
+function setDay(d){ADT=d;renderAgenda()}
+function rAgDay(){
+  const ss=(S.agenda||[]).filter(s=>s.day===ADT).sort((a,b)=>a.s.localeCompare(b.s));
+  const el=document.getElementById('ag-content');
+  if(!ss.length){el.innerHTML='<div class="card"><div class="empty">لا توجد جلسات — اضغط "إضافة جلسة"</div></div>';return}
+  el.innerHTML=`<div class="card" style="padding:0;overflow:hidden"><div style="display:grid;grid-template-columns:78px 1fr;padding:8px 14px;background:var(--surface2);border-bottom:1px solid var(--border)"><div style="font-size:10px;font-weight:700;color:var(--text4)">الوقت</div><div style="font-size:10px;font-weight:700;color:var(--text4)">الجلسة</div></div>${ss.map(s=>`<div class="ag-row${s.type==='break'||s.type==='lunch'?' ag-break':''}"><div><div class="ag-time">${s.s}</div><div class="ag-end">${s.e}</div></div><div class="ag-body"><div class="ag-stripe" style="background:${s.color||AGC[s.type]||'#ccc'}"></div><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px"><span class="ag-title">${s.title}</span><span style="font-size:10px;padding:1px 6px;border-radius:8px;background:${s.color||AGC[s.type]}1a;color:${s.color||AGC[s.type]};font-weight:600">${AGL[s.type]||s.type}</span></div>${s.spk?`<div class="ag-meta">🎤 ${s.spk}</div>`:''} ${s.room?`<div class="ag-meta" style="margin-top:1px">📍 ${s.room}</div>`:''}</div><div style="display:flex;gap:4px;flex-shrink:0"><button class="ib" onclick="openAgModal(${s.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib del" onclick="delAg(${s.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button></div></div></div>`).join('')}</div>`;
+}
+function delAg(id){if(!confirm('حذف الجلسة؟'))return;S.agenda=S.agenda.filter(s=>s.id!==id);save();renderAgenda();toast('تم الحذف')}
+function printAgenda(){
+  const days=[...new Set((S.agenda||[]).map(s=>s.day))].sort();
+  let h=`<html dir="rtl"><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;padding:24px;font-size:13px;color:#0F172A}h1{font-size:18px;margin-bottom:4px}h2{font-size:14px;color:#334155;margin:16px 0 8px}table{width:100%;border-collapse:collapse}td,th{padding:7px 10px;border:1px solid #E2E8F0;text-align:right}th{background:#F8FAFC;font-weight:600}</style></head><body><h1>${S.conf.ar}</h1><div style="font-size:12px;color:#64748B;margin-bottom:14px">${S.conf.date} — ${S.conf.loc}</div>`;
+  days.forEach(d=>{const ss=(S.agenda||[]).filter(s=>s.day===d).sort((a,b)=>a.s.localeCompare(b.s));h+=`<h2>اليوم ${d===1?'الأول':d===2?'الثاني':d}</h2><table><tr><th>الوقت</th><th>الجلسة</th><th>المتحدث</th><th>القاعة</th></tr>`;ss.forEach(s=>{h+=`<tr><td>${s.s}–${s.e}</td><td>${s.title}</td><td>${s.spk||'—'}</td><td>${s.room||'—'}</td></tr>`});h+='</table>'});
+  h+='</body></html>';const w=window.open('','_blank');w.document.write(h);w.document.close();w.print();
+}
+
+// ═══════════ CFP ═══════════
+function gCFP_AR(){
+  const c=S.conf,t=S.theme;
+  return`════════════════════════════════════════\n🏛 ${c.ar}\n════════════════════════════════════════\n\n📅 التاريخ: ${c.date}\n📍 المكان: ${c.loc}\n🏢 تنظيم: ${c.org}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nالثيم العلمي\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"${t.ar}"\n\n${t.rat}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nالمحاور البحثية\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n${S.tracks.map((r,i)=>`${i+1}. ${r.title}`).join('\n')}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nدعوة لتقديم الأبحاث والأوراق العلمية\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nتدعو اللجنة العلمية الباحثين والمهندسين والممارسين إلى تقديم أبحاثهم في المحاور أعلاه.\n\n📌 شروط التقديم:\n• أصيل ولم يُنشر مسبقاً\n• منهجية بحثية واضحة وبيانات موثوقة\n• قابلية التطبيق في السياق السعودي أو الإقليمي\n• اللغة: العربية أو الإنجليزية\n\n📄 مراحل التقديم:\n1. تقديم الملخص (Abstract) — 300-500 كلمة\n2. إشعار القبول الأولي\n3. تقديم الورقة الكاملة\n4. التقييم النهائي والإشعار\n\n⏰ المواعيد النهائية:\n${S.timeline.map(r=>`• ${r.title}: ${r.month}`).join('\n')}\n\n🏆 معايير التقييم (${S.criteria.reduce((a,c)=>a+c.pts,0)} نقطة):\n${S.criteria.map(r=>`• ${r.label}: ${r.pts} نقطة`).join('\n')}\n\n📌 الحد الأدنى للقبول: ${S.settings.pass} نقطة | Best Paper: ${S.settings.best}+ نقطة\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nللتواصل والتقديم\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nالبريد الإلكتروني: [أضف البريد الإلكتروني]\nالموقع الإلكتروني: [أضف الرابط]\n\n════════════════════════════════════════\nنتطلع لمشاركتكم\n${c.org}\n════════════════════════════════════════`;
+}
+function gCFP_EN(){
+  const c=S.conf,t=S.theme;
+  return`════════════════════════════════════════\n🏛 ${c.en}\n════════════════════════════════════════\n\n📅 Date: ${c.date}\n📍 Venue: ${c.loc}\n🏢 Organized by: ${c.org}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nConference Theme\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"${t.en}"\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nResearch Tracks\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n${S.tracks.map((r,i)=>`${i+1}. ${r.title}`).join('\n')}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCall for Papers\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nThe Scientific Committee invites researchers, engineers, practitioners and academics to submit original papers aligned with the above tracks.\n\n📌 Requirements:\n• Original unpublished work\n• Clear research methodology and reliable data\n• Practical applicability in Saudi/regional context\n• Languages: Arabic or English\n\n📄 Submission Stages:\n1. Abstract (300–500 words)\n2. Preliminary acceptance notification\n3. Full paper submission\n4. Final review & notification\n\n⏰ Key Dates:\n${S.timeline.map(r=>`• ${r.title}: ${r.month}`).join('\n')}\n\n🏆 Evaluation Criteria (${S.criteria.reduce((a,c)=>a+c.pts,0)} pts total):\n${S.criteria.map(r=>`• ${r.label}: ${r.pts} pts`).join('\n')}\n\n📌 Acceptance threshold: ${S.settings.pass} pts | Best Paper: ${S.settings.best}+ pts\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nContact & Submissions\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nEmail: [Add email address]\nWebsite: [Add URL]\n\n════════════════════════════════════════\n${c.org}\n════════════════════════════════════════`;
+}
+function renderCFP(){
+  if(!S.cfp_ar)S.cfp_ar=gCFP_AR();
+  if(!S.cfp_en)S.cfp_en=gCFP_EN();
+  document.getElementById('cfp-ar-view').innerHTML=`<pre style="white-space:pre-wrap;font-family:var(--font);font-size:13.5px;line-height:1.9">${S.cfp_ar}</pre>`;
+  document.getElementById('cfp-en-view').innerHTML=`<pre style="white-space:pre-wrap;font-family:var(--font);font-size:13px;line-height:1.9;direction:ltr;text-align:left">${S.cfp_en}</pre>`;
+  document.getElementById('cfp-ar-edit').value=S.cfp_ar;
+  document.getElementById('cfp-en-edit').value=S.cfp_en;
+}
+function regenCFP(){if(!confirm('إعادة توليد النص من البيانات الحالية؟'))return;S.cfp_ar=null;S.cfp_en=null;renderCFP();toast('تم التحديث')}
+function setCFPLang(l){
+  CFPL=l;
+  document.getElementById('cfp-ar-card').style.display=l==='ar'?'block':'none';
+  document.getElementById('cfp-en-card').style.display=l==='en'?'block':'none';
+  document.getElementById('cfp-ar-btn').className='btn btn-sm '+(l==='ar'?'btn-primary':'btn-ghost');
+  document.getElementById('cfp-en-btn').className='btn btn-sm '+(l==='en'?'btn-primary':'btn-ghost');
+}
+function toggleCFPEdit(l){
+  const v=document.getElementById('cfp-'+l+'-view'),e=document.getElementById('cfp-'+l+'-edit');
+  if(!e.style.display||e.style.display==='none'){v.style.display='none';e.style.display='block';e.focus();}
+  else{S['cfp_'+l]=e.value;v.innerHTML=`<pre style="white-space:pre-wrap;font-family:var(--font);font-size:${l==='ar'?'13.5':'13'}px;line-height:1.9;${l==='en'?'direction:ltr;text-align:left':''}">${e.value}</pre>`;v.style.display='block';e.style.display='none';save();toast('تم الحفظ');}
+}
+function copyCFP(){const t=CFPL==='ar'?S.cfp_ar:S.cfp_en;navigator.clipboard.writeText(t||'').then(()=>toast('تم النسخ ✓')).catch(()=>toast('تعذّر النسخ'))}
+function printCFP(){const t=CFPL==='ar'?S.cfp_ar:S.cfp_en;const w=window.open('','_blank');w.document.write(`<html dir="${CFPL==='ar'?'rtl':'ltr'}"><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;padding:30px;white-space:pre-wrap;font-size:13px;line-height:1.9;${CFPL==='en'?'direction:ltr;text-align:left':''}}</style></head><body>${(t||'').replace(/</g,'&lt;')}</body></html>`);w.document.close();w.print();}
+
+// ═══════════ MODALS ═══════════
+function openMo(id){document.getElementById(id).classList.add('open')}
+function closeMo(id){document.getElementById(id).classList.remove('open');EID=null}
+document.querySelectorAll('.mo-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')}));
+function buildCP(id,sel){EC=sel||COLORS[0];document.getElementById(id).innerHTML=COLORS.map(c=>`<div class="c-dot${c===EC?' on':''}" style="background:${c}" onclick="pickC('${id}','${c}')"></div>`).join('')}
+function pickC(id,c){EC=c;document.querySelectorAll('#'+id+' .c-dot').forEach(d=>d.classList.toggle('on',d.style.background===c||d.style.backgroundColor===c))}
+
+// CONF
+function openConfModal(){
+  const c=S.conf;
+  document.getElementById('f-c-ar').value=c.ar;document.getElementById('f-c-en').value=c.en;
+  document.getElementById('f-c-dt').value=c.date;document.getElementById('f-c-loc').value=c.loc;
+  document.getElementById('f-c-org').value=c.org;rTeamList();openMo('mo-conf');
+}
+function rTeamList(){
+  document.getElementById('team-list').innerHTML=S.team.map((m,i)=>`<div style="display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border)"><span style="flex:1;font-size:13px;color:var(--text2)">${m}</span>${i>0?`<button class="ib del" onclick="rmMember(${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>`:''}</div>`).join('');
+}
+function addMember(){const v=document.getElementById('f-new-m').value.trim();if(!v)return;if(!S.team.includes(v))S.team.push(v);document.getElementById('f-new-m').value='';rTeamList();buildUserSel()}
+function rmMember(i){S.team.splice(i,1);rTeamList();buildUserSel()}
+function saveConf(){
+  const c=S.conf;c.ar=document.getElementById('f-c-ar').value.trim()||c.ar;c.en=document.getElementById('f-c-en').value.trim()||c.en;
+  c.date=document.getElementById('f-c-dt').value.trim()||c.date;c.loc=document.getElementById('f-c-loc').value.trim()||c.loc;
+  c.org=document.getElementById('f-c-org').value.trim()||c.org;
+  save();rConf();closeMo('mo-conf');toast('تم حفظ بيانات المؤتمر');
+}
+// THEME
+function openThemeModal(){document.getElementById('f-t-en').value=S.theme.en;document.getElementById('f-t-ar').value=S.theme.ar;document.getElementById('f-t-rat').value=S.theme.rat;openMo('mo-theme')}
+function saveTheme(){S.theme.en=document.getElementById('f-t-en').value.trim()||S.theme.en;S.theme.ar=document.getElementById('f-t-ar').value.trim()||S.theme.ar;S.theme.rat=document.getElementById('f-t-rat').value.trim()||S.theme.rat;save();rTheme();closeMo('mo-theme');toast('تم حفظ الثيم')}
+// SUB
+function openSubModal(id){EID=id||null;document.getElementById('sub-mo-t').textContent=id?'تعديل ثيم فرعي':'إضافة ثيم فرعي';const item=id?S.subs.find(s=>s.id===id):null;document.getElementById('f-s-en').value=item?item.en:'';document.getElementById('f-s-ar').value=item?item.ar:'';buildCP('sub-cp',item?item.color:COLORS[0]);openMo('mo-sub')}
+function saveSub(){const en=document.getElementById('f-s-en').value.trim(),ar=document.getElementById('f-s-ar').value.trim();if(!en&&!ar)return;if(EID){const i=S.subs.findIndex(s=>s.id===EID);if(i>-1)S.subs[i]={...S.subs[i],en,ar,color:EC};}else S.subs.push({id:uid(),en,ar,color:EC});save();rSubs();rCounts();closeMo('mo-sub');toast(EID?'تم التعديل':'تمت الإضافة')}
+// TRACK
+function openTrackModal(id){EID=id||null;document.getElementById('tr-mo-t').textContent=id?'تعديل محور بحثي':'إضافة محور بحثي';const item=id?S.tracks.find(t=>t.id===id):null;document.getElementById('f-tr-t').value=item?item.title:'';document.getElementById('f-tr-d').value=item?item.desc:'';buildCP('tr-cp',item?item.color:COLORS[0]);openMo('mo-track')}
+function saveTrack(){const title=document.getElementById('f-tr-t').value.trim();if(!title)return;const desc=document.getElementById('f-tr-d').value.trim();if(EID){const i=S.tracks.findIndex(t=>t.id===EID);if(i>-1)S.tracks[i]={...S.tracks[i],title,desc,color:EC};}else S.tracks.push({id:uid(),title,desc,color:EC});save();rTracks();rCounts();closeMo('mo-track');toast(EID?'تم التعديل':'تمت الإضافة')}
+// SPK
+function openSpkModal(id){EID=id||null;document.getElementById('spk-mo-t').textContent=id?'تعديل متحدث':'إضافة متحدث رئيسي';const item=id?S.speakers.find(s=>s.id===id):null;document.getElementById('f-sp-n').value=item?item.name:'';document.getElementById('f-sp-i').value=item?item.ini:'';document.getElementById('f-sp-r').value=item?item.role:'';document.getElementById('f-sp-d').value=item?item.desc:'';document.getElementById('f-sp-t').value=item?item.type:'local';buildCP('spk-cp',item?item.color:COLORS[0]);openMo('mo-spk')}
+function saveSpk(){const name=document.getElementById('f-sp-n').value.trim();if(!name)return;const obj={name,ini:(document.getElementById('f-sp-i').value.trim()||name.substring(0,2)).toUpperCase(),role:document.getElementById('f-sp-r').value.trim(),desc:document.getElementById('f-sp-d').value.trim(),type:document.getElementById('f-sp-t').value,color:EC};if(EID){const i=S.speakers.findIndex(s=>s.id===EID);if(i>-1)S.speakers[i]={...S.speakers[i],...obj};}else S.speakers.push({id:uid(),...obj});save();rSpeakers();rCounts();closeMo('mo-spk');toast(EID?'تم التعديل':'تمت الإضافة')}
+// CRI
+function openCriModal(id){EID=id||null;document.getElementById('cri-mo-t').textContent=id?'تعديل معيار':'إضافة معيار تقييم';const item=id?S.criteria.find(c=>c.id===id):null;document.getElementById('f-cr-l').value=item?item.label:'';document.getElementById('f-cr-p').value=item?item.pts:'';buildCP('cri-cp',item?item.color:COLORS[0]);openMo('mo-cri')}
+function saveCri(){const label=document.getElementById('f-cr-l').value.trim(),pts=parseInt(document.getElementById('f-cr-p').value)||0;if(!label||pts<=0)return;if(EID){const i=S.criteria.findIndex(c=>c.id===EID);if(i>-1)S.criteria[i]={...S.criteria[i],label,pts,color:EC};}else S.criteria.push({id:uid(),label,pts,color:EC});save();rCriteria();rCounts();closeMo('mo-cri');toast(EID?'تم التعديل':'تمت الإضافة')}
+// TL
+function openTlModal(id){EID=id||null;document.getElementById('tl-mo-t').textContent=id?'تعديل مرحلة':'إضافة مرحلة';const item=id?S.timeline.find(t=>t.id===id):null;document.getElementById('f-tl-m').value=item?item.month:'';document.getElementById('f-tl-t').value=item?item.title:'';document.getElementById('f-tl-d').value=item?item.desc:'';buildCP('tl-cp',item?item.color:COLORS[0]);openMo('mo-tl')}
+function saveTl(){const title=document.getElementById('f-tl-t').value.trim();if(!title)return;const obj={month:document.getElementById('f-tl-m').value.trim(),title,desc:document.getElementById('f-tl-d').value.trim(),color:EC};if(EID){const i=S.timeline.findIndex(t=>t.id===EID);if(i>-1)S.timeline[i]={...S.timeline[i],...obj};}else S.timeline.push({id:uid(),...obj});save();rTimeline();rCounts();closeMo('mo-tl');toast(EID?'تم التعديل':'تمت الإضافة')}
+// AG
+function openAgModal(id){EID=id||null;document.getElementById('ag-mo-t').textContent=id?'تعديل جلسة':'إضافة جلسة';const item=id?(S.agenda||[]).find(s=>s.id===id):null;document.getElementById('f-ag-dy').value=item?item.day:ADT;document.getElementById('f-ag-s').value=item?item.s:'09:00';document.getElementById('f-ag-e').value=item?item.e:'10:00';document.getElementById('f-ag-t').value=item?item.title:'';document.getElementById('f-ag-sp').value=item?item.spk:'';document.getElementById('f-ag-r').value=item?item.room:'';document.getElementById('f-ag-tp').value=item?item.type:'panel';buildCP('ag-cp',item?item.color:COLORS[0]);openMo('mo-ag')}
+function saveAg(){const title=document.getElementById('f-ag-t').value.trim();if(!title)return;const obj={day:parseInt(document.getElementById('f-ag-dy').value),s:document.getElementById('f-ag-s').value,e:document.getElementById('f-ag-e').value,title,spk:document.getElementById('f-ag-sp').value.trim(),room:document.getElementById('f-ag-r').value.trim(),type:document.getElementById('f-ag-tp').value,color:EC};if(!S.agenda)S.agenda=[];if(EID){const i=S.agenda.findIndex(s=>s.id===EID);if(i>-1)S.agenda[i]={...S.agenda[i],...obj};}else S.agenda.push({id:uid(),...obj});save();renderAgenda();closeMo('mo-ag');toast(EID?'تم التعديل':'تمت الإضافة')}
+
+// SPECIAL
+function editCoverage(){const v=prompt('شروط التغطية:',S.settings.cov);if(v){S.settings.cov=v;document.getElementById('coverage-txt').textContent=v;save();toast('تم الحفظ')}}
+function editPass(){const v=prompt('الحد الأدنى:',S.settings.pass);if(v&&!isNaN(v)){S.settings.pass=parseInt(v);save();rCriteria();toast('تم الحفظ')}}
+function editBest(){const v=prompt('نقاط Best Paper:',S.settings.best);if(v&&!isNaN(v)){S.settings.best=parseInt(v);save();rCriteria();toast('تم الحفظ')}}
+function del(k,id){if(!confirm('هل أنت متأكد من الحذف؟'))return;S[k]=S[k].filter(x=>x.id!==id);save();if(k==='subs')rSubs();else if(k==='tracks')rTracks();else if(k==='speakers')rSpeakers();else if(k==='criteria')rCriteria();else if(k==='timeline')rTimeline();rCounts();toast('تم الحذف')}
+
+// EXPORT/IMPORT
+function exportData(){const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='conference-plan.json';a.click();URL.revokeObjectURL(u);toast('تم التصدير')}
+function importData(){document.getElementById('imp-file').click()}
+function handleImport(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);if(confirm('استبدال البيانات الحالية؟')){S=d;save();renderAll();toast('تم الاستيراد');}}catch{alert('ملف غير صالح');}e.target.value='';};r.readAsText(f)}
+
+// TOAST
+let tT;
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('show'),2200)}
+
+// PWA
+let dp;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;document.getElementById('install-bar').classList.add('show')});
+document.getElementById('install-btn').onclick=async()=>{if(!dp)return;dp.prompt();await dp.userChoice;dp=null;document.getElementById('install-bar').classList.remove('show')};
+if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+// INIT
+renderAll();
+</script>
+</body>
+</html>
