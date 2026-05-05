@@ -241,9 +241,29 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
   .topbar .btn span{display:none}
   #dash-two-col{grid-template-columns:1fr!important}
 }
+/* ══ FIREBASE SYNC INDICATOR ══ */
+#sync-dot{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--border2);color:var(--text3);transition:all .3s}
+#sync-dot.syncing{color:var(--gold);border-color:var(--gold-l);background:var(--gold-l)}
+#sync-dot.synced{color:var(--green);border-color:var(--green-l);background:var(--green-l)}
+#sync-dot.error{color:var(--coral);border-color:var(--coral-l);background:var(--coral-l)}
+#sync-dot .dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+#sync-dot.syncing .dot{animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+/* ══ LOADING OVERLAY ══ */
+#fb-loading{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#fff}
+#fb-loading .spin{width:36px;height:36px;border:3px solid rgba(255,255,255,.2);border-top-color:#5EEAD4;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
+<!-- Loading overlay -->
+<div id="fb-loading">
+  <div class="spin"></div>
+  <div style="font-family:'Tajawal',sans-serif;font-size:14px;color:rgba(255,255,255,.7)">جاري الاتصال بقاعدة البيانات...</div>
+</div>
 <div class="app">
 
 <!-- ══ DESKTOP SIDEBAR ══ -->
@@ -291,6 +311,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <select id="user-sel" onchange="setUser(this.value)" style="border:none;outline:none;background:transparent;font-family:var(--font);font-size:12px;color:var(--text2);cursor:pointer;max-width:110px"></select>
       </div>
+      <div id="sync-dot" title="حالة المزامنة"><span class="dot"></span><span id="sync-txt">متصل</span></div>
       <button class="btn btn-ghost btn-sm" onclick="exportData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>تصدير</span></button>
       <button class="btn btn-ghost btn-sm" onclick="importData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span>استيراد</span></button>
     </div>
@@ -451,12 +472,52 @@ const STIT={theme:['الثيم العلمي','الثيم الرئيسي والث
 // ═══════════ DEFAULT DATA ═══════════
 const DEF={
   conf:{ar:'المؤتمر الدولي لإدارة الأزمات والطوارئ والكوارث',en:'International Conference on Crisis, Emergency & Disaster Management',date:'سبتمبر 2026',loc:'القصيم، المملكة العربية السعودية',org:'خارطة الإنماء للاستشارات الهندسية - إمارة منطقة القصيم'},
-  theme:{en:'Resilient Communities: Integrated Systems for Crisis, Emergency & Disaster Management',ar:'مجتمعات صامدة: منظومة متكاملة لإدارة الأزمات والطوارئ والكوارث',rat:'يجمع بين مفهوم "الصمود" كهدف استراتيجي، و"المنظومة المتكاملة" كمنهج يعكس التعاون بين القطاعات. مناسب لجمهور متنوع: صانع قرار حكومي، مهندس تقني، وباحث أكاديمي. يتسق مع رؤية 2030 دون أن يكون مقيداً بها.'},
-  subs:[{id:1,en:'Preparedness & Prevention',ar:'الاستعداد والوقاية قبل الكارثة',color:'#0D9488'},{id:2,en:'Emergency Field Response',ar:'الاستجابة الطارئة الميدانية',color:'#6D4ACD'},{id:3,en:'Tech & AI in Crisis Management',ar:'التكنولوجيا والذكاء الاصطناعي في إدارة الأزمات',color:'#2563EB'},{id:4,en:'Critical Infrastructure Protection',ar:'حماية المنشآت الحيوية',color:'#DC4B32'},{id:5,en:'Recovery & Reconstruction',ar:'التعافي وإعادة البناء',color:'#D97706'},{id:6,en:'Institutional & Community Partnership',ar:'الشراكة المجتمعية والمؤسسية',color:'#16A34A'}],
-  tracks:[{id:1,title:'الإطار التشريعي والحوكمة',desc:'السياسات والأنظمة الوطنية، البروتوكولات الدولية (Sendai Framework)، صلاحيات الجهات المعنية',color:'#0D9488'},{id:2,title:'التخطيط والاستعداد المسبق',desc:'خطط الطوارئ المحلية والمناطقية، تدريب الكوادر، تقييم المخاطر وخرائط الهشاشة',color:'#6D4ACD'},{id:3,title:'التكنولوجيا والذكاء الاصطناعي',desc:'أنظمة الإنذار المبكر، Digital Twins للبنية التحتية، الذكاء الاصطناعي في التنبؤ والاستجابة',color:'#2563EB'},{id:4,title:'حماية المنشآت الحيوية',desc:'أنظمة الطاقة والمياه والنقل، التهديدات السيبرانية، السلامة الصناعية في الكوارث',color:'#DC4B32'},{id:5,title:'الكوارث الطبيعية — السياق السعودي',desc:'إدارة السيول في المناطق الجبلية والحضرية، حرائق الغابات، العواصف الرملية',color:'#D97706'},{id:6,title:'التعافي وبناء الصمود',desc:'إعادة الإعمار ما بعد الكارثة، الصحة النفسية للمجتمعات، التمويل والتأمين ضد الكوارث',color:'#16A34A'}],
-  speakers:[{id:1,ini:'DC',name:'ممثل رفيع — الدفاع المدني',role:'الرئاسة العامة للدفاع المدني، المملكة العربية السعودية',desc:'المنظومة الوطنية للاستجابة، الخطط الميدانية للمناطق',type:'local',color:'#0D9488'},{id:2,ini:'NC',name:'ممثل — NCEMA',role:'المركز الوطني لإدارة الأزمات والكوارث، الإمارات',desc:'نموذج الإمارات الرائد في إدارة الأزمات',type:'gulf',color:'#6D4ACD'},{id:3,ini:'UN',name:'خبير — UNDRR',role:'مكتب الأمم المتحدة للحد من مخاطر الكوارث',desc:'إطار Sendai 2015-2030، المعايير الدولية',type:'intl',color:'#2563EB'},{id:4,ini:'JP',name:'خبير ياباني في الكوارث',role:'أكاديمية اليابان لبحوث الكوارث (NIED)',desc:'أنظمة الإنذار المبكر، الهندسة المقاومة للكوارث',type:'intl',color:'#D97706'},{id:5,ini:'AI',name:'متخصص الذكاء الاصطناعي في الطوارئ',role:'KAUST / مركز بحثي سعودي',desc:'تطبيقات AI في التنبؤ، منصات الاستجابة الذكية',type:'academic',color:'#DC4B32'},{id:6,ini:'PR',name:'ممثل القطاع الخاص',role:'أرامكو السعودية',desc:'نماذج الشراكة، حماية المنشآت الصناعية',type:'private',color:'#16A34A'}],
-  criteria:[{id:1,label:'الصلة بمحاور المؤتمر',pts:25,color:'#0D9488'},{id:2,label:'الأصالة والجدة العلمية',pts:20,color:'#6D4ACD'},{id:3,label:'المنهجية البحثية وصحة البيانات',pts:20,color:'#2563EB'},{id:4,label:'القابلية للتطبيق في السياق السعودي',pts:15,color:'#DC4B32'},{id:5,label:'جودة العرض التقديمي والوضوح',pts:10,color:'#D97706'},{id:6,label:'التوصيات والأثر العملي',pts:10,color:'#16A34A'}],
-  timeline:[{id:1,month:'مايو 2026',title:'الإطلاق والتأسيس',desc:'إقرار الثيم والمحاور — تشكيل لجنة التحكيم — إصدار Call for Papers',color:'#0D9488'},{id:2,month:'يونيو 2026',title:'التواصل مع المتحدثين',desc:'إرسال الدعوات الرسمية — بدء استقبال ملخصات الأبحاث',color:'#6D4ACD'},{id:3,month:'يوليو 2026',title:'التقييم والاختيار',desc:'إغلاق استقبال الملخصات (15 يوليو) — تقييم الـ Abstracts — إشعار المقبولين',color:'#2563EB'},{id:4,month:'أغسطس 2026',title:'التحضير النهائي',desc:'استقبال الأوراق كاملة (1-15 أغسطس) — التقييم النهائي — ترتيب جدول الجلسات',color:'#DC4B32'},{id:5,month:'سبتمبر 2026',title:'انعقاد المؤتمر',desc:'اليوم الأول: الافتتاح + Keynotes + جلستان علميتان — اليوم الثاني: جلسات + ورش + Best Papers + التوصيات',color:'#D97706'}],
+  theme:{
+    en:'Resilient Communities: Integrated Governance for Crisis, Emergency & Disaster Management',
+    ar:'مجتمعات صامدة: حوكمة متكاملة لإدارة الأزمات والطوارئ والكوارث',
+    rat:'يدمج الثيم بين ثلاثة مستويات متكاملة: الحوكمة كإطار مؤسسي ناظم، والمجتمع كوحدة استجابة فاعلة، والصمود كهدف استراتيجي قابل للقياس. يخاطب الجمهور الرباعي: صانع القرار الحكومي الذي يبحث عن أطر تشريعية، والمهندس التقني الذي يحتاج أدوات ميدانية، والباحث الأكاديمي الباحث عن منهجيات، والقطاع الخاص الحامي لمنشآته الحيوية. يتموضع في سياق رؤية 2030 دون أن يُقيَّد بها، ومتوافق مع إطار Sendai الدولي للحد من مخاطر الكوارث 2015-2030.'
+  },
+  subs:[
+    {id:1,en:'Governance & Institutional Frameworks',ar:'الحوكمة والأطر المؤسسية لإدارة الأزمات',color:'#0D9488'},
+    {id:2,en:'Risk Assessment & Early Warning',ar:'تقييم المخاطر والإنذار المبكر',color:'#6D4ACD'},
+    {id:3,en:'Preparedness & Field Response',ar:'الاستعداد والاستجابة الميدانية',color:'#2563EB'},
+    {id:4,en:'Technology & AI in Crisis Management',ar:'التقنيات المتقدمة والذكاء الاصطناعي',color:'#DC4B32'},
+    {id:5,en:'Recovery, Resilience & Lessons Learned',ar:'التعافي والصمود والدروس المستفادة',color:'#D97706'},
+    {id:6,en:'Community & Institutional Partnership',ar:'الشراكة المجتمعية والمؤسسية',color:'#16A34A'}
+  ],
+  tracks:[
+    {id:1,title:'الحوكمة والأطر التشريعية لإدارة الأزمات والكوارث',desc:'الهياكل التنظيمية وتوزيع الأدوار والمسؤوليات بين الجهات، البروتوكولات الوطنية والدولية (Sendai Framework - ISO 22301)، آليات التنسيق بين القطاعات، نماذج الحوكمة الفعّالة من تجارب الدول الرائدة في المنطقة والعالم.',color:'#0D9488'},
+    {id:2,title:'تقييم مخاطر الكوارث ومنظومة الإنذار المبكر',desc:'منهجيات تحليل وتقييم المخاطر وخرائط الهشاشة، أنظمة الرصد والمراقبة والإنذار المبكر متعددة المخاطر، نمذجة السيناريوهات وتحليل الأثر، تكامل بيانات المخاطر مع منصات صنع القرار، التحديات الخاصة بالبيئة السعودية (سيول - عواصف - موجات حر).',color:'#6D4ACD'},
+    {id:3,title:'الاستعداد المؤسسي والاستجابة الطارئة الميدانية',desc:'خطط الطوارئ المحلية والمناطقية وآليات تفعيلها، بناء القدرات وتدريب الكوادر والتمارين الميدانية، إدارة عمليات الإخلاء والإيواء، تنسيق الاستجابة بين الجهات المتعددة في المنطقة، نماذج تطبيقية من استجابات ناجحة للكوارث على مستوى المناطق.',color:'#2563EB'},
+    {id:4,title:'التقنيات المتقدمة والذكاء الاصطناعي في إدارة الأزمات',desc:'تطبيقات الذكاء الاصطناعي في التنبؤ بالكوارث وتحليل المخاطر في الوقت الفعلي، Digital Twins لمحاكاة البنية التحتية وسيناريوهات الكوارث، منصات الإدارة الميدانية والطائرات المسيّرة، أنظمة الاتصالات الطارئة والأمن السيبراني في أوقات الأزمات، تقنيات الاستشعار عن بُعد ونظم المعلومات الجغرافية.',color:'#DC4B32'},
+    {id:5,title:'حماية المنشآت الحيوية والبنية التحتية الحساسة',desc:'منظومة حماية مرافق الطاقة والمياه والنقل والصحة، تقييم هشاشة المنشآت أمام الكوارث الطبيعية والأعمال التخريبية، استراتيجيات استمرارية الأعمال للقطاعات الحيوية، تجارب الشركات الكبرى (أرامكو - المياه - الاتصالات) في حماية منشآتها وضمان استمراريتها.',color:'#9A3412'},
+    {id:6,title:'التعافي وبناء الصمود — الدروس المستفادة وأفضل الممارسات',desc:'استراتيجيات إعادة الإعمار ما بعد الكارثة وتمويلها، قياس الصمود المجتمعي ومؤشراته، الصحة النفسية للمجتمعات المتضررة، توثيق الدروس المستفادة من الكوارث السعودية والإقليمية والعالمية، نماذج ناجحة في بناء الصمود على المدى البعيد.',color:'#16A34A'}
+  ],
+  speakers:[
+    {id:1,ini:'مس',name:'مسؤول رفيع — الرئاسة العامة للدفاع المدني',role:'الرئاسة العامة للدفاع المدني، المملكة العربية السعودية',desc:'المحاضرة الرئيسية الأولى: المنظومة الوطنية لإدارة الأزمات والطوارئ — الواقع والتطلعات في ضوء رؤية 2030',type:'local',color:'#0D9488'},
+    {id:2,ini:'UN',name:'ممثل — مكتب الأمم المتحدة للحد من مخاطر الكوارث (UNDRR)',role:'UNDRR — المكتب الإقليمي للدول العربية',desc:'إطار Sendai 2015-2030 وتقدم التطبيق في المنطقة العربية، مؤشرات قياس الصمود الوطني',type:'intl',color:'#2563EB'},
+    {id:3,ini:'YK',name:'خبير دولي — إدارة مخاطر الكوارث الطبيعية',role:'وكالة دولية متخصصة في بحوث الكوارث (يابان / ألمانيا)',desc:'أنظمة الإنذار المبكر متعددة المخاطر، الهندسة المقاومة للكوارث، تجارب دول رائدة في الاستجابة للكوارث الطبيعية',type:'intl',color:'#6D4ACD'},
+    {id:4,ini:'هق',name:'مسؤول رفيع — هيئة الهلال الأحمر السعودي',role:'هيئة الهلال الأحمر السعودي — قطاع العمليات والطوارئ',desc:'منظومة الاستجابة الإنسانية في الكوارث، الشراكة مع الجهات الحكومية والدولية في إدارة العمليات الميدانية',type:'local',color:'#DC4B32'},
+    {id:5,ini:'AI',name:'خبير — الذكاء الاصطناعي وإدارة الأزمات',role:'KAUST أو مركز بحثي سعودي متخصص في تقنيات الكوارث',desc:'تطبيقات الذكاء الاصطناعي في التنبؤ بالكوارث وتحليل المخاطر في الوقت الفعلي، نماذج محاكاة سيناريوهات الكوارث',type:'academic',color:'#D97706'},
+    {id:6,ini:'مق',name:'مسؤول — هيئة الطوارئ والأزمات والكوارث الإماراتية (NCEMA)',role:'الهيئة الوطنية لإدارة الطوارئ والأزمات والكوارث — الإمارات',desc:'نموذج الإمارات في إدارة الأزمات: الحوكمة، الاستجابة المتكاملة، ومؤشرات الصمود الوطني',type:'gulf',color:'#0891B2'},
+    {id:7,ini:'PR',name:'ممثل — القطاع الخاص والمنشآت الحيوية',role:'شركة كبرى في قطاع الطاقة أو البنية التحتية (أرامكو / المياه الوطنية)',desc:'استمرارية الأعمال وحماية المنشآت الحيوية: التجربة التطبيقية، خطط الطوارئ، والشراكة مع الجهات الحكومية',type:'private',color:'#16A34A'},
+    {id:8,ini:'UNESCO',name:'ممثل — منظمة اليونسكو / برنامج الأمم المتحدة للبيئة',role:'United Nations Educational, Scientific and Cultural Organization (UNESCO)',desc:'دور التعليم والثقافة في بناء الصمود المجتمعي، دمج إدارة مخاطر الكوارث في المناهج والسياسات الوطنية',type:'intl',color:'#7C3AED'}
+  ],
+  criteria:[
+    {id:1,label:'الصلة بمحاور المؤتمر والمساهمة العلمية',pts:25,color:'#0D9488'},
+    {id:2,label:'الأصالة والجدة — عدم النشر المسبق',pts:20,color:'#6D4ACD'},
+    {id:3,label:'المنهجية البحثية وموثوقية البيانات',pts:20,color:'#2563EB'},
+    {id:4,label:'قابلية التطبيق في السياق السعودي والمناطقي',pts:15,color:'#DC4B32'},
+    {id:5,label:'التوصيات العملية والأثر المتوقع على صانع القرار',pts:10,color:'#D97706'},
+    {id:6,label:'جودة العرض والوضوح والسلاسة اللغوية',pts:10,color:'#16A34A'}
+  ],
+  timeline:[
+    {id:1,month:'مايو 2026',title:'الإطلاق والتأسيس',desc:'إقرار الثيم والمحاور العلمية الستة — تشكيل لجنة التحكيم (3 محكمين لكل ورقة) — إصدار Call for Papers رسمياً — إطلاق الموقع والتسجيل',color:'#0D9488'},
+    {id:2,month:'يونيو 2026',title:'التواصل مع المتحدثين الرئيسيين',desc:'إرسال الدعوات الرسمية لـ Keynote Speakers الدوليين والمحليين — التفاوض على التغطية الكاملة والجدول — التنسيق مع الجهات الحكومية الشريكة (الدفاع المدني، الهلال الأحمر، الإمارة)',color:'#6D4ACD'},
+    {id:3,month:'يوليو 2026',title:'استقبال الملخصات وتقييمها',desc:'إغلاق استقبال الملخصات (Abstract) في 15 يوليو — تقييم الـ Abstracts بواسطة لجنة التحكيم — إشعار المقبولين بتقديم الأوراق الكاملة — تأكيد نهائي من Keynote Speakers',color:'#2563EB'},
+    {id:4,month:'أغسطس 2026',title:'استقبال الأوراق الكاملة وبناء البرنامج',desc:'استقبال الأوراق البحثية كاملة (1-15 أغسطس) — التقييم النهائي وتصنيف Best Papers — ترتيب جدول الجلسات وتوزيع الأوراق على المحاور — إرسال البرنامج النهائي للمشاركين والإعلام',color:'#DC4B32'},
+    {id:5,month:'سبتمبر 2026',title:'انعقاد المؤتمر',desc:'اليوم الأول: الافتتاح الرسمي + محاضرتان رئيسيتان + جلستان علميتان + زيارة المعرض المصاحب — اليوم الثاني: جلستان علميتان + ورشتا عمل + إعلان Best Papers + الجلسة الختامية والتوصيات',color:'#D97706'}
+  ],
   agenda:[{id:1,day:1,s:'08:00',e:'09:00',title:'التسجيل والاستقبال',spk:'',room:'بهو المؤتمر',type:'other',color:'#64748B'},{id:2,day:1,s:'09:00',e:'10:00',title:'حفل الافتتاح الرسمي',spk:'صاحب السمو أمير منطقة القصيم',room:'القاعة الرئيسية',type:'opening',color:'#0A1628'},{id:3,day:1,s:'10:00',e:'11:00',title:'المحاضرة الرئيسية الأولى: المنظومة الوطنية للاستجابة',spk:'ممثل الدفاع المدني',room:'القاعة الرئيسية',type:'keynote',color:'#0D9488'},{id:4,day:1,s:'11:00',e:'11:30',title:'استراحة القهوة',spk:'',room:'',type:'break',color:'#94A3B8'},{id:5,day:1,s:'11:30',e:'13:00',title:'الجلسة العلمية الأولى — الإطار التشريعي والحوكمة',spk:'',room:'القاعة الرئيسية',type:'panel',color:'#6D4ACD'},{id:6,day:1,s:'13:00',e:'14:30',title:'استراحة الغداء والصلاة',spk:'',room:'',type:'lunch',color:'#D97706'},{id:7,day:1,s:'14:30',e:'15:30',title:'المحاضرة الرئيسية الثانية: نموذج الإمارات',spk:'ممثل NCEMA',room:'القاعة الرئيسية',type:'keynote',color:'#0D9488'},{id:8,day:1,s:'15:30',e:'17:00',title:'الجلسة العلمية الثانية — التخطيط والاستعداد',spk:'',room:'القاعة الرئيسية',type:'panel',color:'#6D4ACD'},{id:9,day:2,s:'09:00',e:'10:00',title:'المحاضرة الرئيسية الثالثة: إطار Sendai الدولي',spk:'خبير UNDRR',room:'القاعة الرئيسية',type:'keynote',color:'#0D9488'},{id:10,day:2,s:'10:00',e:'11:30',title:'الجلسة العلمية الثالثة — التكنولوجيا والذكاء الاصطناعي',spk:'',room:'القاعة الرئيسية',type:'panel',color:'#6D4ACD'},{id:11,day:2,s:'11:30',e:'12:00',title:'استراحة القهوة',spk:'',room:'',type:'break',color:'#94A3B8'},{id:12,day:2,s:'12:00',e:'13:00',title:'ورشة العمل — حماية المنشآت الحيوية',spk:'ممثل أرامكو',room:'قاعة أ',type:'workshop',color:'#2563EB'},{id:13,day:2,s:'13:00',e:'14:30',title:'استراحة الغداء والصلاة',spk:'',room:'',type:'lunch',color:'#D97706'},{id:14,day:2,s:'14:30',e:'16:00',title:'الجلسة العلمية الرابعة — التعافي وبناء الصمود',spk:'',room:'القاعة الرئيسية',type:'panel',color:'#6D4ACD'},{id:15,day:2,s:'16:00',e:'16:30',title:'إعلان Best Papers وتكريم الباحثين',spk:'رئيس اللجنة العلمية',room:'القاعة الرئيسية',type:'closing',color:'#16A34A'},{id:16,day:2,s:'16:30',e:'17:30',title:'الجلسة الختامية — التوصيات والبيان الختامي',spk:'',room:'القاعة الرئيسية',type:'closing',color:'#0A1628'}],
   statuses:{},comments:{},
   team:['أنا (رئيس اللجنة العلمية)','عضو اللجنة 1','عضو اللجنة 2'],
@@ -471,7 +532,100 @@ if(!S.settings)S.settings={...DEF.settings};
 
 let CU=S.team[0]||'أنا', EID=null, EC=COLORS[0], ADT=1, CFPL='ar', SMK=null;
 
-function save(){localStorage.setItem('conf_v4',JSON.stringify(S))}
+// ═══════════ FIREBASE ═══════════
+// ★ ضع هنا بيانات مشروعك من Firebase Console → Project Settings → Your apps
+const FB_CONFIG = {
+  apiKey:            "REPLACE_WITH_YOUR_API_KEY",
+  authDomain:        "REPLACE_WITH_YOUR_AUTH_DOMAIN",
+  projectId:         "REPLACE_WITH_YOUR_PROJECT_ID",
+  storageBucket:     "REPLACE_WITH_YOUR_STORAGE_BUCKET",
+  messagingSenderId: "REPLACE_WITH_YOUR_SENDER_ID",
+  appId:             "REPLACE_WITH_YOUR_APP_ID"
+};
+const DOC_PATH = 'conference/main'; // مسار المستند في Firestore
+
+let db = null;
+let fbReady = false;
+let saveTimer = null;
+
+function setSyncUI(state, txt){
+  const el = document.getElementById('sync-dot');
+  const txEl = document.getElementById('sync-txt');
+  if(!el) return;
+  el.className = 'sync-dot ' + state;
+  if(txEl) txEl.textContent = txt;
+  // Also set id for CSS
+  el.id = 'sync-dot';
+  el.className = '';
+  el.classList.add(state==='ok'?'synced':state==='saving'?'syncing':'error');
+}
+
+async function initFirebase(){
+  try {
+    firebase.initializeApp(FB_CONFIG);
+    db = firebase.firestore();
+    // Enable offline persistence
+    await db.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+
+    // Load initial data from Firestore
+    const snap = await db.doc(DOC_PATH).get();
+    if(snap.exists){
+      S = snap.data();
+      ['statuses','comments','team','agenda'].forEach(k=>{if(!S[k])S[k]=JSON.parse(JSON.stringify(DEF[k]||{}))});
+      if(!S.settings)S.settings={...DEF.settings};
+      localStorage.setItem('conf_v4', JSON.stringify(S));
+    } else {
+      // First time — write defaults to Firestore
+      await db.doc(DOC_PATH).set(S);
+    }
+
+    // Real-time listener — syncs changes from other users instantly
+    db.doc(DOC_PATH).onSnapshot(snap => {
+      if(!snap.exists) return;
+      const remote = snap.data();
+      // Only update if change came from another session
+      if(JSON.stringify(remote) !== JSON.stringify(S)){
+        S = remote;
+        ['statuses','comments','team','agenda'].forEach(k=>{if(!S[k])S[k]=JSON.parse(JSON.stringify(DEF[k]||{}))});
+        if(!S.settings)S.settings={...DEF.settings};
+        localStorage.setItem('conf_v4', JSON.stringify(S));
+        renderAll();
+        toast('🔄 تم التحديث من عضو آخر في الفريق');
+      }
+      setSyncUI('ok','متزامن ✓');
+    }, err => {
+      setSyncUI('error','غير متصل');
+    });
+
+    fbReady = true;
+    setSyncUI('ok','متزامن ✓');
+  } catch(err){
+    console.warn('Firebase error:', err);
+    fbReady = false;
+    setSyncUI('error','وضع محلي');
+    // Fall back to localStorage silently
+  }
+  document.getElementById('fb-loading').style.display = 'none';
+  renderAll();
+}
+
+function save(){
+  // Always save to localStorage immediately (offline fallback)
+  localStorage.setItem('conf_v4', JSON.stringify(S));
+  setSyncUI('saving','جاري الحفظ...');
+  // Debounce Firestore writes (avoid hammering on rapid changes)
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async()=>{
+    if(!fbReady || !db) { setSyncUI('error','وضع محلي'); return; }
+    try {
+      await db.doc(DOC_PATH).set(S);
+      setSyncUI('ok','متزامن ✓');
+    } catch(err){
+      setSyncUI('error','فشل الحفظ');
+      console.error('Firestore save error:', err);
+    }
+  }, 800);
+}
 function uid(){return Date.now()+Math.random()}
 function now(){return new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}
 
@@ -780,7 +934,7 @@ document.getElementById('install-btn').onclick=async()=>{if(!dp)return;dp.prompt
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
 // INIT
-renderAll();
+initFirebase();
 </script>
 </body>
 </html>
